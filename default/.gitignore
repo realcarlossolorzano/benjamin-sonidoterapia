@@ -1,0 +1,17 @@
+# Environment variables and secrets
+.env*
+.env.local
+
+# Vercel deployment cache
+.vercel
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Archives and build artifacts
+*.zip
+*.tar.gz
+
+# Raw uncompressed source assets (website uses videos/ and gallery/)
+raw_assets/

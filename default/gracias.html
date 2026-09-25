@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gracias — Terapia de Sonido Grupal</title>
+  <meta name="description" content="Tu registro ha sido recibido. Nos pondremos en contacto contigo pronto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep:        #101714;
+      --bg-surface:     #17231F;
+      --green:          #007A53;
+      --sage:           #A8BCAF;
+      --cream:          #FCD299;
+      --text-primary:   #F5F1E8;
+      --text-secondary: #B9C0B8;
+      --border:         rgba(168, 188, 175, 0.1);
+      --font:           'Manrope', system-ui, sans-serif;
+      --ease:           cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font);
+      font-weight: 400;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* Background ambient glow */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ambient::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 122, 83, 0.06) 0%, transparent 70%);
+      animation: ambientPulse 8s ease-in-out infinite;
+    }
+
+    .ambient::after {
+      content: '';
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(252, 210, 153, 0.04) 0%, transparent 70%);
+      animation: ambientPulse 8s 4s ease-in-out infinite;
+    }
+
+    @keyframes ambientPulse {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 32px;
+      max-width: 560px;
+    }
+
+    /* Success circle */
+    .check-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 1.5px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 40px;
+      opacity: 0;
+      transform: scale(0);
+      animation: circleIn 0.6s 0.3s var(--ease) forwards;
+    }
+
+    .check-circle svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--green);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .check-circle svg path {
+      stroke-dasharray: 30;
+      stroke-dashoffset: 30;
+      animation: checkDraw 0.4s 0.7s var(--ease) forwards;
+    }
+
+    @keyframes circleIn {
+      from { opacity: 0; transform: scale(0); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes checkDraw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .thank-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s var(--ease) forwards;
+    }
+
+    .thank-title {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s var(--ease) forwards;
+    }
+
+    .thank-body {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s var(--ease) forwards;
+    }
+
+    .thank-detail {
+      display: inline-block;
+      font-size: 0.82rem;
+      color: var(--sage);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      border-radius: 6px;
+      margin-top: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.85s var(--ease) forwards;
+    }
+
+    .thank-detail strong {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 48px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--sage);
+      text-decoration: none;
+      transition: color 0.3s;
+      opacity: 0;
+      animation: fadeUp 0.8s 1s var(--ease) forwards;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+    .back-link .arrow { transition: transform 0.3s; }
+    .back-link:hover .arrow { transform: translateX(-3px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer */
+    .ty-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.68rem;
+      color: rgba(168, 188, 175, 0.3);
+    }
+
+    .ty-footer a {
+      color: rgba(168, 188, 175, 0.5);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(168, 188, 175, 0.2);
+    }
+  </style>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-536QFM63');</script>
+  <!-- End Google Tag Manager -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-536QFM63"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div class="ambient"></div>
+
+  <div class="content">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24">
+        <path d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+
+    <p class="thank-eyebrow">Registro confirmado</p>
+    <h1 class="thank-title">Gracias por tu interés</h1>
+    <p class="thank-body">
+      Hemos recibido tu solicitud correctamente.<br />
+      Te contactaremos pronto para confirmar los detalles de tu experiencia.
+    </p>
+    <p class="thank-body">
+      Prepárate para un viaje de sonido que transformará tu presencia.
+    </p>
+
+    <a href="/" class="back-link">
+      <span class="arrow">←</span> Volver al inicio
+    </a>
+  </div>
+
+  <div class="ty-footer">
+    Made with ❤️ by <a href="https://futurapartner.com/" target="_blank" rel="noopener">Futura Partner</a>
+  </div>
+
+  <script>
+    // Push Standard 'Lead' event to dataLayer for GTM & Meta Pixel conversion tracking
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'Lead',
+      'event_name': 'Lead',
+      'page_type': 'thank_you_page'
+    });
+
+    // Play a soft bowl sound on arrival
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        if (typeof playBowl === 'undefined') {
+          // Inline bowl synth for thank you page
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const freqs = [396, 528, 639];
+          freqs.forEach((f, i) => {
+            setTimeout(() => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(f, ctx.currentTime);
+              gain.gain.setValueAtTime(0, ctx.currentTime);
+              gain.gain.linearRampToValueAtTime(0.06, ctx.currentTime + 0.3);
+              gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(ctx.currentTime);
+              osc.stop(ctx.currentTime + 4);
+            }, i * 600);
+          });
+        }
+      }, 800);
+    });
+  </script>
+</body>
+</html>
