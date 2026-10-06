@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terapia de Sonido Grupal — Exclusiva | Inscríbete</title>
+  <meta name="description" content="Terapia de Sonido Grupal Inmersiva guiada por Benjamín. Reserva tu invitación e inscríbete a la experiencia." />
+  <meta property="og:title" content="Terapia de Sonido Grupal — Exclusiva | Inscríbete" />
+  <meta property="og:description" content="Una experiencia de Terapia de Sonido Grupal Inmersiva guiada por Benjamín. Cupos exclusivos. Inscríbete ahora." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/css/intlTelInput.min.css" />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-536QFM63');</script>
+  <!-- End Google Tag Manager -->
+<script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-536QFM63"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- NAV -->
+  <nav id="main-nav" role="navigation" aria-label="Navegación principal">
+    <div class="nav-wordmark">Terapia de Sonido Grupal</div>
+    <a href="#checkout" class="nav-cta" id="nav-cta-btn">Reservar</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Inicio">
+    <div class="hero-bg" role="img" aria-label="Atmósfera de terapia de sonido"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Próximas Fechas: 3 Oct (¡Último cupo!), 17 Oct & 24 Oct <span class="desktop-only">&nbsp;·&nbsp; 5:00 PM – 7:00 PM</span> &nbsp;·&nbsp; <span class="hero-location-text">📍 Managua, Nicaragua</span></p>
+
+      <h1 class="hero-title">
+        Del ruido interno,<br />
+        a la <em>presencia.</em>
+      </h1>
+
+      <p class="hero-subtitle">
+        Una terapia de sonido grupal inmersiva guiada por Benjamín.<br class="desktop-only" />
+        Experiencia exclusiva con audífonos de alta fidelidad en <strong>Managua, Nicaragua</strong>.
+      </p>
+
+      <a href="#checkout" class="btn-primary" id="hero-cta-btn">
+        Solicitar Invitación <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" aria-labelledby="exp-title">
+    <div class="container">
+      <div class="experience-grid">
+        <div class="experience-text">
+          <span class="eyebrow reveal">La Experiencia</span>
+          <h2 class="section-title reveal delay-1" id="exp-title">
+            Juntos en el espacio.<br />Solos en el viaje.
+          </h2>
+          <p class="section-body reveal delay-2">
+            Una sesión grupal inmersiva diseñada para conectar profundamente. Compartirás el espacio con otras personas, pero vivirás un viaje interior completamente personal, sin interrupciones y sin distracciones.
+          </p>
+          <p class="section-body reveal delay-2">
+            Al colocarte los auriculares de alta fidelidad, el mundo exterior desaparece. Las frecuencias vibracionales de los cuencos, gongs y tingshas te envuelven en una atmósfera de introspección y paz.
+          </p>
+          <ul class="feature-list reveal delay-3">
+            <li class="feature-item">
+              <div class="feature-dot"></div>
+              <div class="feature-text">
+                <strong>Auriculares de alta fidelidad</strong>
+                <p>Aislamiento acústico total que transmite cada matiz y frecuencia directamente a tus sentidos.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-dot"></div>
+              <div class="feature-text">
+                <strong>3 Oct (¡Último Cupo!), 17 Oct & 24 de Octubre · Cupos limitados</strong>
+                <p>Sesiones íntimas con espacios reducidos para asegurar una experiencia personalizada.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-dot"></div>
+              <div class="feature-text">
+                <strong>Sesión grupal inmersiva</strong>
+                <p>La energía del grupo combinada con la intimidad de tu propio canal de sonido.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="experience-video-container reveal delay-2">
+          <div class="video-card-wrapper main-video-wrapper">
+            <video
+              id="video-principal"
+              class="custom-video"
+              src="videos/ruido_interno.mp4"
+              poster="videos/poster_ruido_interno.jpg"
+              playsinline
+              preload="metadata"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-principal">
+              <button class="video-play-button" aria-label="Reproducir video principal">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+              <div class="video-tag-pill">Ruido interno a la presencia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO DE LA SESIÓN -->
+  <section id="proceso" aria-labelledby="proceso-title">
+    <div class="container">
+      <div class="proceso-header">
+        <span class="eyebrow reveal">La Dinámica</span>
+        <h2 class="section-title reveal delay-1" id="proceso-title">
+          Una sesión grupal íntima de sonido,<br />respiración e integración.
+        </h2>
+        <p class="section-body proceso-intro reveal delay-2">
+          Es un evento presencial de 90 minutos diseñado para ayudarte a pasar del ruido interno a un estado de mayor presencia. No necesitás experiencia previa. No tenés que saber meditar. No tenés que llegar “bien”. Solo necesitás llegar con disposición a pausar, respirar y permitirte sentir.
+        </p>
+      </div>
+
+      <div class="proceso-columns">
+        <!-- Columna Izquierda: Video Highlights -->
+        <div class="proceso-video-col reveal delay-1">
+          <div class="video-card-wrapper highlights-video-wrapper">
+            <video
+              id="video-highlights"
+              class="custom-video"
+              src="videos/highlights.mp4"
+              poster="videos/poster_highlights.jpg"
+              playsinline
+              preload="metadata"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-highlights">
+              <button class="video-play-button" aria-label="Ver momentos destacados">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+              <div class="video-tag-pill">Highlights de la sesión</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Tarjetas del proceso -->
+        <div class="proceso-cards-col">
+          <div class="proceso-grid">
+            <div class="proceso-card reveal">
+              <span class="proceso-num">01</span>
+              <h3 class="proceso-card-title">Llegada e intención</h3>
+              <p class="proceso-card-body">Entrás al espacio con la intención que ya empezamos a trabajar 48 horas antes, bajás el ritmo y te preparás para soltar, escuchar o integrar.</p>
+            </div>
+            <div class="proceso-card reveal delay-1">
+              <span class="proceso-num">02</span>
+              <h3 class="proceso-card-title">Preparación corporal y respiración</h3>
+              <p class="proceso-card-body">Una guía suave para que el cuerpo empiece a sentirse seguro y presente.</p>
+            </div>
+            <div class="proceso-card reveal delay-2">
+              <span class="proceso-num">03</span>
+              <h3 class="proceso-card-title">Terapia de sonido guiada</h3>
+              <p class="proceso-card-body">Frecuencias, vibración y presencia para acompañar un estado profundo de descanso interno.</p>
+            </div>
+            <div class="proceso-card reveal delay-3">
+              <span class="proceso-num">04</span>
+              <h3 class="proceso-card-title">Integración final</h3>
+              <p class="proceso-card-body">Un cierre para darle lenguaje a lo vivido y llevarte una intención clara para los próximos días.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE — cinematic moment -->
+  <section id="quote-band" aria-label="Filosofía">
+    <div class="quote-bg" aria-hidden="true"></div>
+    <div class="quote-overlay"></div>
+    <div class="quote-inner">
+      <div class="quote-line" aria-hidden="true"></div>
+      <blockquote class="quote-text reveal">
+        No necesitas escapar del mundo para encontrar la paz. Solo necesitas escuchar con el corazón lo que el sonido tiene para decirte.
+      </blockquote>
+      <p class="quote-attr reveal delay-1">— Benjamín</p>
+      <div class="quote-line" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- BENJAMIN -->
+  <section id="benjamin" aria-labelledby="benjamin-title">
+    <div class="benjamin-ambient" aria-hidden="true"></div>
+    <div class="container">
+      <div class="benjamin-grid">
+        <div class="benjamin-image-frame reveal">
+          <img src="benjamin_gong.jpg" alt="Benjamín guiando con gong sagrado" loading="lazy" />
+        </div>
+        <div class="benjamin-content">
+          <span class="eyebrow reveal">Tu Guía</span>
+          <h2 class="section-title reveal delay-1" id="benjamin-title">Conoce a Benjamín</h2>
+          <p class="section-body reveal delay-2">
+            Benjamín ha acompañado a más de 100 personas en experiencias de sonido inmersivo, ayudándolas a disolver el estrés y reconectar con su estado natural de calma y presencia.
+          </p>
+          <p class="section-body reveal delay-2">
+            Utilizando gong, cuencos tibetanos, tingshas y tecnología de audio inmersivo, diseña un contenedor seguro donde el ruido de la mente se apaga para dar paso a la tranquilidad.
+          </p>
+          <div class="credentials reveal delay-3">
+            <span class="credential-item">+100 Personas Guiadas</span>
+            <span class="credential-item">·</span>
+            <span class="credential-item">Gong Terapéutico</span>
+            <span class="credential-item">·</span>
+            <span class="credential-item">Cuencos Tibetanos</span>
+            <span class="credential-item">·</span>
+            <span class="credential-item">Audio Inmersivo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY — Sesiones de Sonidoterapia -->
+  <section id="gallery" aria-labelledby="gallery-title">
+    <div class="container">
+      <div class="gallery-header">
+        <span class="eyebrow reveal">Galería de Sesiones</span>
+        <h2 class="section-title reveal delay-1" id="gallery-title">
+          Momentos en Presencia
+        </h2>
+        <p class="section-body gallery-intro reveal delay-2">
+          Un vistazo a la atmósfera íntima, el cuidado de cada instrumento y la profunda relajación que se vive en cada encuentro.
+        </p>
+      </div>
+      <div class="gallery-grid reveal delay-2">
+        <div class="gallery-card" data-index="0" data-large="gallery/sesion_foto_1_large.jpg" data-caption="Inmersión sonora grupal y presencia plena">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_1_thumb.jpg" alt="Participantes en sesión de terapia de sonido grupal" class="pos-top" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card" data-index="1" data-large="gallery/sesion_foto_2_large.jpg" data-caption="Instrumentos sagrados y cuencos tibetanos de sanación">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_2_thumb.jpg" alt="Cuencos tibetanos afinados para terapia de sonido" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card" data-index="2" data-large="gallery/sesion_foto_3_large.jpg" data-caption="Espacio preparado con atención plena para cada participante">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_3_thumb.jpg" alt="Ambiente y disposición de la sesión de sonidoterapia" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card" data-index="3" data-large="gallery/sesion_foto_4_large.jpg" data-caption="Guía personalizada y vibración armónica">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_4_thumb.jpg" alt="Facilitador Benjamín guiando la terapia sonora" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card" data-index="4" data-large="gallery/sesion_foto_5_large.jpg" data-caption="Relajación y descanso profundo con auriculares HD">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_5_thumb.jpg" alt="Participante descansando en sesión de sonido" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card" data-index="5" data-large="gallery/sesion_foto_6_large.jpg" data-caption="Sonoridad envolvente de campanas y frecuencias puras">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_6_thumb.jpg" alt="Detalle de campanas e instrumentos sonoros" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card" data-index="6" data-large="gallery/sesion_foto_7_large.jpg" data-caption="Paz mental y reconexión profunda con uno mismo">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_7_thumb.jpg" alt="Participante en meditación sonora con antifaz" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card" data-index="7" data-large="gallery/sesion_foto_8_large.jpg" data-caption="Cierre de sesión y reintegración grupal">
+          <div class="gallery-img-wrapper">
+            <img src="gallery/sesion_foto_8_thumb.jpg" alt="Grupo compartiendo al finalizar la sesión de sonidoterapia" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS (VIDEOS) -->
+  <section id="testimonios" aria-labelledby="testimonios-title">
+    <div class="container">
+      <div class="testimonios-header">
+        <span class="eyebrow reveal">Experiencias Reales</span>
+        <h2 class="section-title reveal delay-1" id="testimonios-title">
+          Historias de transformación
+        </h2>
+        <p class="section-body testimonios-intro reveal delay-2">
+          Testimonios sinceros de participantes que hicieron la pausa, se colocaron los auriculares y vivieron su propio viaje interior.
+        </p>
+      </div>
+
+      <!-- Fila 1: 3 Videos Destacados (Centrados en Desktop) -->
+      <div class="testimonios-featured-grid">
+        <!-- 1: Cristhian Fletes -->
+        <div class="testimonio-card reveal">
+          <div class="testimonio-video-wrap">
+            <video
+              id="video-cristhian"
+              class="custom-video"
+              src="videos/testimonio_cristhian.mp4"
+              poster="videos/poster_testimonio_cristhian.jpg"
+              playsinline
+              preload="none"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-cristhian">
+              <button class="video-play-button" aria-label="Ver testimonio de Cristhian Fletes">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="testimonio-info">
+            <div class="testimonio-name">Cristhian Fletes</div>
+            <div class="testimonio-role">Participante · Sesión Grupal</div>
+          </div>
+        </div>
+
+        <!-- 2: Deborah Castro -->
+        <div class="testimonio-card reveal delay-1">
+          <div class="testimonio-video-wrap">
+            <video
+              id="video-deborah"
+              class="custom-video"
+              src="videos/testimonio_deborah.mp4"
+              poster="videos/poster_testimonio_deborah.jpg"
+              playsinline
+              preload="none"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-deborah">
+              <button class="video-play-button" aria-label="Ver testimonio de Deborah Castro">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="testimonio-info">
+            <div class="testimonio-name">Deborah Castro</div>
+            <div class="testimonio-role">Participante · Sesión Grupal</div>
+          </div>
+        </div>
+
+        <!-- 3: Tanya Martínez -->
+        <div class="testimonio-card reveal delay-2">
+          <div class="testimonio-video-wrap">
+            <video
+              id="video-tanya"
+              class="custom-video"
+              src="videos/testimonio_tanya.mp4"
+              poster="videos/poster_testimonio_tanya.jpg"
+              playsinline
+              preload="none"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-tanya">
+              <button class="video-play-button" aria-label="Ver testimonio de Tanya Martínez">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="testimonio-info">
+            <div class="testimonio-name">Tanya Martínez</div>
+            <div class="testimonio-role">Participante · Sesión Grupal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila 2: 4 Videos Adicionales -->
+      <div class="testimonios-grid">
+        <!-- 4: Carlos -->
+        <div class="testimonio-card reveal">
+          <div class="testimonio-video-wrap">
+            <video
+              id="video-carlos"
+              class="custom-video"
+              src="videos/testimonio_carlos.mp4"
+              poster="videos/poster_testimonio_carlos.jpg"
+              playsinline
+              preload="none"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-carlos">
+              <button class="video-play-button" aria-label="Ver testimonio de Carlos">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="testimonio-info">
+            <div class="testimonio-name">Carlos</div>
+            <div class="testimonio-role">Participante · Sesión Grupal</div>
+          </div>
+        </div>
+
+        <!-- 5: David -->
+        <div class="testimonio-card reveal delay-1">
+          <div class="testimonio-video-wrap">
+            <video
+              id="video-david"
+              class="custom-video"
+              src="videos/testimonio_david.mp4"
+              poster="videos/poster_testimonio_david.jpg"
+              playsinline
+              preload="none"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-david">
+              <button class="video-play-button" aria-label="Ver testimonio de David">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="testimonio-info">
+            <div class="testimonio-name">David</div>
+            <div class="testimonio-role">Participante · Sesión Grupal</div>
+          </div>
+        </div>
+
+        <!-- 6: Frank -->
+        <div class="testimonio-card reveal delay-2">
+          <div class="testimonio-video-wrap">
+            <video
+              id="video-frank"
+              class="custom-video"
+              src="videos/testimonio_frank.mp4"
+              poster="videos/poster_testimonio_frank.jpg"
+              playsinline
+              preload="none"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-frank">
+              <button class="video-play-button" aria-label="Ver testimonio de Frank">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="testimonio-info">
+            <div class="testimonio-name">Frank</div>
+            <div class="testimonio-role">Participante · Sesión Grupal</div>
+          </div>
+        </div>
+
+        <!-- 7: Félix -->
+        <div class="testimonio-card reveal delay-3">
+          <div class="testimonio-video-wrap">
+            <video
+              id="video-felix"
+              class="custom-video"
+              src="videos/testimonio_felix.mp4"
+              poster="videos/poster_testimonio_felix.jpg"
+              playsinline
+              preload="none"
+              controls
+            ></video>
+            <div class="video-custom-overlay" data-video-target="video-felix">
+              <button class="video-play-button" aria-label="Ver testimonio de Félix">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="testimonio-info">
+            <div class="testimonio-name">Félix</div>
+            <div class="testimonio-role">Participante · Sesión Grupal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LO QUE INCLUYE TU EXPERIENCIA -->
+  <section id="incluye" aria-labelledby="incluye-title">
+    <div class="container">
+      <div class="incluye-header">
+        <span class="eyebrow reveal">Propuesta Integral</span>
+        <h2 class="section-title reveal delay-1" id="incluye-title">
+          Lo que incluye tu experiencia
+        </h2>
+      </div>
+
+      <div class="incluye-grid">
+        <div class="incluye-card reveal">
+          <div class="incluye-tag">Antes de la sesión</div>
+          <h3 class="incluye-card-title">Onboarding Privado (48 hs antes)</h3>
+          <p class="incluye-card-body">Una guía de 3 preguntas de introspección para ayudarte a identificar qué necesitás soltar antes de llegar al espacio.</p>
+        </div>
+
+        <div class="incluye-card reveal delay-1">
+          <div class="incluye-tag">Durante el evento</div>
+          <h3 class="incluye-card-title">Sesión grupal de sonido (90 min)</h3>
+          <p class="incluye-card-body">Una experiencia guiada para pausar, respirar y reconectar.</p>
+        </div>
+
+        <div class="incluye-card reveal delay-1">
+          <div class="incluye-tag">Durante el evento</div>
+          <h3 class="incluye-card-title">Respiración y preparación corporal</h3>
+          <p class="incluye-card-body">Para que no llegués directo desde el ruido del día a una inmersión profunda.</p>
+        </div>
+
+        <div class="incluye-card reveal delay-2">
+          <div class="incluye-tag">Durante el evento</div>
+          <h3 class="incluye-card-title">Terapia de sonido guiada</h3>
+          <p class="incluye-card-body">Un viaje vibracional diseñado para acompañar el descanso interno y la apertura.</p>
+        </div>
+
+        <div class="incluye-card reveal delay-2">
+          <div class="incluye-tag">Durante el evento</div>
+          <h3 class="incluye-card-title">Cierre de integración</h3>
+          <p class="incluye-card-body">Para darle sentido a lo vivido y llevarte una intención concreta.</p>
+        </div>
+
+        <div class="incluye-card reveal delay-3">
+          <div class="incluye-tag">Después de la sesión</div>
+          <h3 class="incluye-card-title">Hoja de Ruta Post Sesión</h3>
+          <p class="incluye-card-body">Herramientas simples para sostener la sensación de alivio y claridad en los días posteriores a la sesión.</p>
+        </div>
+
+        <div class="incluye-card featured-incluye reveal delay-3">
+          <div class="incluye-tag">Oportunidad Única</div>
+          <h3 class="incluye-card-title">Invitación privada</h3>
+          <p class="incluye-card-body">Una oportunidad exclusiva para continuar con un proceso más profundo, solo si sentís que es el momento adecuado.</p>
+        </div>
+      </div>
+
+      <div class="valor-real-banner reveal delay-3">
+        <span class="valor-real-label">Valor real:</span>
+        <span class="valor-real-text">Una experiencia íntima, cuidada y guiada.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="pricing-layout">
+        <div class="pricing-header">
+          <span class="eyebrow reveal">Inversión</span>
+          <h2 class="section-title reveal delay-1" id="pricing-title">
+            Tu entrada a la experiencia
+          </h2>
+        </div>
+        <div class="pricing-card reveal delay-2">
+          <div class="pricing-date">
+            <span class="pricing-date-day">Sábado 3 Oct (Último cupo), 17 Oct & 24 Oct</span>
+            <span class="pricing-date-time">5:00 PM – 7:00 PM</span>
+            <span class="pricing-date-loc">📍 Managua, Nicaragua</span>
+          </div>
+          <div class="pricing-body">
+            <div class="pricing-regular">
+              <span class="pricing-strike">$97</span>
+              <span class="pricing-regular-label">Precio Regular</span>
+            </div>
+            <div class="pricing-founder">
+              <span class="pricing-amount">$77</span>
+              <span class="pricing-founder-label">Precio Fundador</span>
+            </div>
+            <div class="pricing-deposit-note">
+              <span class="deposit-tag">Acceso 100% Confirmado</span>
+              <p>Pago único de <strong>$77 USD</strong> a Precio Fundador. Sin saldos ni cobros pendientes.</p>
+            </div>
+            <div class="pricing-includes">
+              <span class="pricing-includes-dot"></span>
+              <span class="pricing-includes-text">Incluye Aceite Esencial Personalizado</span>
+            </div>
+          </div>
+          <a href="#checkout" class="btn-primary pricing-cta">
+            Reservar a Precio Fundador <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+    <!-- CHECKOUT SECTION -->
+  <section id="checkout" aria-labelledby="checkout-title">
+    <div class="container">
+      <div class="form-layout">
+        <div class="form-intro">
+          <div class="form-location-tag reveal">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Sesión Presencial · Managua, Nicaragua</span>
+          </div>
+          <span class="eyebrow reveal">Reserva y Pago Directo</span>
+          <h2 class="section-title reveal delay-1" id="checkout-title">
+            Asegura tu entrada<br />a Precio Fundador ($77 USD)
+          </h2>
+          <p class="section-body reveal delay-2">
+            El evento del <strong>19 de Septiembre está totalmente agotado</strong>. Asegura tu lugar con confirmación inmediata para el <strong>3 de Octubre (¡Último cupo!)</strong>, <strong>17 de Octubre</strong> o <strong>24 de Octubre</strong>.
+          </p>
+          <div class="checkout-guarantee-box reveal delay-2">
+            <div class="guarantee-icon">🛡️</div>
+            <div class="guarantee-text">
+              <strong>Pago 100% Seguro y Encriptado</strong>
+              <p>Tu transacción es procesada directamente por Stripe. Recibirás tu recibo y confirmación al instante.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card reveal delay-2">
+          <h3 class="form-card-title">Completa tu Reserva</h3>
+          <p class="form-card-subtitle">Ingresa tus datos y confirma tu cupo con pago seguro.</p>
+
+          <form id="checkout-form" novalidate>
+            <div class="form-group">
+              <label for="field-name" class="form-label">Nombre Completo</label>
+              <input id="field-name" name="firstName" type="text" class="form-input" placeholder="Tu nombre" required autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+              <label for="field-email" class="form-label">Correo Electrónico</label>
+              <input id="field-email" name="email" type="email" class="form-input" placeholder="tu@correo.com" required autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="field-phone" class="form-label">Teléfono / WhatsApp</label>
+              <input id="field-phone" name="phone" type="tel" class="form-input" placeholder="" required autocomplete="tel" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Fecha de la Sesión</label>
+              <div class="option-selector event-option-selector">
+                <label class="option-card sold-out" id="opt-sep19">
+                  <input type="radio" name="eventOption" value="Evento 19 de Septiembre (Agotado)" disabled />
+                  <div class="option-radio-dot"></div>
+                  <div class="option-text-wrap">
+                    <div class="option-title">Sábado 19 de Septiembre</div>
+                    <div class="option-desc">Sesión completa</div>
+                  </div>
+                  <span class="sold-out-badge">SOLD OUT</span>
+                </label>
+                <label class="option-card active highlight-option" id="opt-oct03">
+                  <input type="radio" name="eventOption" value="Evento 3 de Octubre" checked />
+                  <div class="option-radio-dot"></div>
+                  <div class="option-text-wrap">
+                    <div class="option-title">Sábado 3 de Octubre</div>
+                    <div class="option-desc">5:00 PM – 7:00 PM · 1 Lugar Disponible</div>
+                  </div>
+                  <span class="urgency-badge">ÚLTIMO CUPO</span>
+                </label>
+                <label class="option-card" id="opt-oct17">
+                  <input type="radio" name="eventOption" value="Evento 17 de Octubre" />
+                  <div class="option-radio-dot"></div>
+                  <div class="option-text-wrap">
+                    <div class="option-title">Sábado 17 de Octubre</div>
+                    <div class="option-desc">5:00 PM – 7:00 PM</div>
+                  </div>
+                </label>
+                <label class="option-card" id="opt-oct24">
+                  <input type="radio" name="eventOption" value="Evento 24 de Octubre" />
+                  <div class="option-radio-dot"></div>
+                  <div class="option-text-wrap">
+                    <div class="option-title">Sábado 24 de Octubre</div>
+                    <div class="option-desc">5:00 PM – 7:00 PM</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- ORDER SUMMARY BOX ($77 USD) -->
+            <div class="order-summary-box">
+              <div class="order-summary-header">
+                <span>Resumen de tu Orden</span>
+                <span class="summary-badge">Precio Fundador</span>
+              </div>
+              <div class="order-summary-line">
+                <span>Entrada Terapia de Sonido Grupal (90 min)</span>
+                <span>$77.00 USD</span>
+              </div>
+              <div class="order-summary-line">
+                <span>Aceite Esencial Personalizado</span>
+                <span class="included-tag">Gratis</span>
+              </div>
+              <div class="order-summary-line">
+                <span>Onboarding Privado + Hoja de Ruta Post Sesión</span>
+                <span class="included-tag">Gratis</span>
+              </div>
+              <div class="order-summary-divider"></div>
+              <div class="order-summary-total">
+                <span>Total a pagar hoy:</span>
+                <span class="total-amount-val">$77.00 USD</span>
+              </div>
+            </div>
+
+            <!-- STRIPE ELEMENTS CONTAINER -->
+            <div class="form-group stripe-payment-group">
+              <label class="form-label">Datos de Tarjeta de Crédito / Débito</label>
+              <div id="stripe-card-element" class="stripe-element-container">
+                <!-- Stripe Elements se inyecta aquí -->
+              </div>
+              <div id="card-errors" class="stripe-error-message" role="alert"></div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">
+              <span id="btn-text">Pagar $77 USD y Confirmar Cupo</span>
+              <span class="arrow" id="btn-arrow">→</span>
+            </button>
+
+            <div class="stripe-trust-footer">
+              <span>🔒 Pago procesado directamente por Stripe con cifrado SSL de 256 bits</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOATING CTA BUTTON -->
+  <div class="floating-cta-container" id="floating-cta-container">
+    <a href="#checkout" class="floating-cta-btn" id="floating-cta-btn">
+      <span class="floating-cta-dot"></span>
+      <span class="floating-cta-text">Reservar mi lugar</span>
+      <span class="floating-cta-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-wordmark">Terapia de Sonido Grupal</div>
+      <div class="footer-credit">
+        Made with ❤️ by <a href="https://futurapartner.com/" target="_blank" rel="noopener">Futura Partner</a>.
+      </div>
+      <p class="footer-copy">© 2026 Terapia de Sonido Grupal · Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX MODAL -->
+  <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Galería de fotos de la sesión">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-container">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar vista expandida">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Foto anterior">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <div class="lightbox-content">
+        <div class="lightbox-img-wrap">
+          <img id="lightbox-img" src="" alt="Sesión de sonidoterapia expandida" />
+        </div>
+        <div class="lightbox-footer">
+          <div class="lightbox-caption" id="lightbox-caption"></div>
+          <div class="lightbox-counter" id="lightbox-counter">1 / 8</div>
+        </div>
+      </div>
+      <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Siguiente foto">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/js/intlTelInput.min.js"></script>
+  <script src="checkout.js"></script>
+</body>
+</html>
