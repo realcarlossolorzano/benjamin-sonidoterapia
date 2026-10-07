@@ -338,8 +338,8 @@ const GHL_API_KEY = 'pit-ba0ac45f-f9a9-4609-bbe6-7db9d74cbc98';
 const GHL_LOCATION_ID = 'pWmoIvATwHwAM1vn0m0x';
 const GHL_API_URL = 'https://services.leadconnectorhq.com/contacts/';
 
-// Stripe Publishable Key: Puede configurarse vía window.STRIPE_PUBLISHABLE_KEY o reemplazar aquí
-const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_REPLACE_WITH_YOUR_STRIPE_KEY';
+// Stripe Publishable Key de producción (Benjamín Bautista)
+const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
 
 let stripe = null;
 let elements = null;
