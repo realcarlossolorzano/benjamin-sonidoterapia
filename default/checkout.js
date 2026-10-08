@@ -334,9 +334,8 @@ if (phoneInputField && typeof window.intlTelInput !== 'undefined') {
 // Monto fijo: $77 USD
 // =============================================
 
-const GHL_API_KEY = 'pit-ba0ac45f-f9a9-4609-bbe6-7db9d74cbc98';
-const GHL_LOCATION_ID = 'pWmoIvATwHwAM1vn0m0x';
-const GHL_API_URL = 'https://services.leadconnectorhq.com/contacts/';
+// Endpoint serverless seguro (protege el token de GHL en Vercel)
+const SUBMIT_CONTACT_URL = '/api/submit-contact';
 
 // Stripe Publishable Key de producción (Benjamín Bautista)
 const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
@@ -564,13 +563,11 @@ if (checkoutForm) {
         'user_name': name
       });
 
-      // Enviar a GHL
-      await fetch(GHL_API_URL, {
+      // Enviar a backend serverless seguro (protegido por Vercel)
+      await fetch(SUBMIT_CONTACT_URL, {
         method: 'POST',
         headers: {
-          'Content-Type':  'application/json',
-          'Authorization': `Bearer ${GHL_API_KEY}`,
-          'Version':        '2021-07-28'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(ghlPayload)
       }).catch(err => console.warn('GHL sync error:', err));

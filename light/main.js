@@ -329,12 +329,10 @@ if (phoneInputField && typeof window.intlTelInput !== 'undefined') {
 }
 
 // =============================================
-// FORM — GoHighLevel API v2 (LeadConnectorHQ)
+// FORM — GoHighLevel API v2 (Servidor Seguro)
 // =============================================
 
-const GHL_API_KEY = 'pit-ba0ac45f-f9a9-4609-bbe6-7db9d74cbc98';
-const GHL_LOCATION_ID = 'pWmoIvATwHwAM1vn0m0x';
-const GHL_API_URL = 'https://services.leadconnectorhq.com/contacts/';
+const SUBMIT_CONTACT_URL = '/api/submit-contact';
 
 const form = document.getElementById('ghl-form');
 const submitBtn = document.getElementById('submit-btn');
@@ -481,13 +479,11 @@ if (form) {
       }
     };
 
-    // Send API request in background while sound resonates
-    const apiPromise = fetch(GHL_API_URL, {
+    // Send API request in background to secure serverless endpoint
+    const apiPromise = fetch(SUBMIT_CONTACT_URL, {
       method: 'POST',
       headers: {
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${GHL_API_KEY}`,
-        'Version':        '2021-07-28'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
     }).then(res => {
@@ -495,7 +491,7 @@ if (form) {
         res.json().then(data => console.warn(`GHL API warning ${res.status}:`, data)).catch(() => {});
       }
     }).catch(err => {
-      console.error('Error al enviar a GoHighLevel:', err);
+      console.error('Error al enviar contacto:', err);
     });
 
     // Soft fade-out at 1.8s
