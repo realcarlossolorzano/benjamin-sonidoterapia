@@ -365,13 +365,14 @@ function initStripeElements() {
     const style = {
       base: {
         color: '#F5F1E8',
-        fontFamily: "'Manrope', system-ui, sans-serif",
+        fontFamily: "'Manrope', -apple-system, BlinkMacSystemFont, sans-serif",
         fontSmoothing: 'antialiased',
         fontSize: '15px',
+        lineHeight: '24px',
+        iconColor: '#C8A97E',
         '::placeholder': {
-          color: '#7A8880'
-        },
-        backgroundColor: '#17231F'
+          color: '#6F8075'
+        }
       },
       invalid: {
         color: '#ff6b6b',
@@ -381,6 +382,7 @@ function initStripeElements() {
 
     cardElement = elements.create('card', {
       style: style,
+      iconStyle: 'solid',
       hidePostalCode: false
     });
 
