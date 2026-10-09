@@ -500,11 +500,33 @@ if (form) {
       document.body.style.opacity = '0';
     }, 1800);
 
-    // Wait for the full sound to decay (~2.4s) before entering Thank You Page
-    await apiPromise;
+    // Almacenar datos del lead para precargar el checkout en la página de gracias
+    try {
+      sessionStorage.setItem('benjamin_lead', JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        option: selectedOption,
+        deposit: selectedDeposit
+      }));
+    } catch(e) {}
+
+    // Esperar respuesta o fallback a los 2.2s para una transición fluida a la página de gracias
+    const redirectParams = new URLSearchParams({
+      name: name,
+      email: email,
+      phone: phone,
+      option: selectedOption
+    });
+
+    await Promise.race([
+      apiPromise,
+      new Promise(resolve => setTimeout(resolve, 2000))
+    ]);
+
     setTimeout(() => {
-      window.location.href = 'gracias';
-    }, 2400);
+      window.location.href = `gracias?${redirectParams.toString()}`;
+    }, 400);
   });
 }
 

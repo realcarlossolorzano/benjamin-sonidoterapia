@@ -3,27 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gracias — Terapia de Sonido Grupal</title>
-  <meta name="description" content="Tu registro ha sido recibido. Nos pondremos en contacto contigo pronto." />
+  <title>Confirmar Cupo — Terapia de Sonido Grupal</title>
+  <meta name="description" content="Tu cupo está pre-reservado. Completa tu entrada a Precio Fundador ($77 USD) para asegurar tu lugar en la sesión." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-536QFM63');</script>
+  <!-- End Google Tag Manager -->
+
   <style>
     :root {
       --bg-deep:        #101714;
       --bg-surface:     #17231F;
+      --bg-card:        rgba(23, 35, 31, 0.88);
       --green:          #007A53;
+      --green-light:    #00A86B;
       --sage:           #A8BCAF;
-      --cream:          #FCD299;
+      --gold:           #C8A97E;
+      --gold-light:     #FCD299;
+      --gold-hover:     #b8976c;
       --text-primary:   #F5F1E8;
       --text-secondary: #B9C0B8;
-      --border:         rgba(168, 188, 175, 0.1);
-      --font:           'Manrope', system-ui, sans-serif;
+      --text-muted:     #7A8880;
+      --border:         rgba(168, 188, 175, 0.14);
+      --border-gold:    rgba(200, 169, 126, 0.35);
+      --font:           'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
       --ease:           cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; }
+    html { font-size: 16px; scroll-behavior: smooth; }
 
     body {
       background: var(--bg-deep);
@@ -34,12 +50,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       -webkit-font-smoothing: antialiased;
-      overflow: hidden;
+      overflow-x: hidden;
+      padding: 40px 20px 80px 20px;
     }
 
-    /* Background ambient glow */
+    /* Ambient Background Glow */
     .ambient {
       position: fixed;
       inset: 0;
@@ -50,13 +67,13 @@
     .ambient::before {
       content: '';
       position: absolute;
-      top: 20%;
+      top: 10%;
       left: 50%;
       transform: translateX(-50%);
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(0, 122, 83, 0.06) 0%, transparent 70%);
-      animation: ambientPulse 8s ease-in-out infinite;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(200, 169, 126, 0.07) 0%, transparent 70%);
+      animation: ambientPulse 9s ease-in-out infinite alternate;
     }
 
     .ambient::after {
@@ -65,233 +82,1317 @@
       bottom: 10%;
       left: 50%;
       transform: translateX(-50%);
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(252, 210, 153, 0.04) 0%, transparent 70%);
-      animation: ambientPulse 8s 4s ease-in-out infinite;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 122, 83, 0.08) 0%, transparent 70%);
+      animation: ambientPulse 9s 4.5s ease-in-out infinite alternate;
     }
 
     @keyframes ambientPulse {
-      0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+      0% { opacity: 0.4; transform: translateX(-50%) scale(0.95); }
+      100% { opacity: 0.85; transform: translateX(-50%) scale(1.1); }
     }
 
-    .content {
+    /* Main Container */
+    .checkout-wrapper {
       position: relative;
       z-index: 1;
-      text-align: center;
-      padding: 40px 32px;
-      max-width: 560px;
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
     }
 
-    /* Success circle */
-    .check-circle {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      border: 1.5px solid var(--green);
+    /* Funnel Step Indicator */
+    .funnel-steps {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 40px;
-      opacity: 0;
-      transform: scale(0);
-      animation: circleIn 0.6s 0.3s var(--ease) forwards;
+      gap: 10px;
+      margin-bottom: 28px;
     }
 
-    .check-circle svg {
-      width: 28px;
-      height: 28px;
-      stroke: var(--green);
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .check-circle svg path {
-      stroke-dasharray: 30;
-      stroke-dashoffset: 30;
-      animation: checkDraw 0.4s 0.7s var(--ease) forwards;
-    }
-
-    @keyframes circleIn {
-      from { opacity: 0; transform: scale(0); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes checkDraw {
-      to { stroke-dashoffset: 0; }
-    }
-
-    .thank-eyebrow {
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
+    .step-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--cream);
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.5s var(--ease) forwards;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .thank-title {
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      font-weight: 400;
-      line-height: 1.25;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-      letter-spacing: -0.02em;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.6s var(--ease) forwards;
+    .step-pill.completed {
+      background: rgba(0, 168, 107, 0.12);
+      border: 1px solid rgba(0, 168, 107, 0.35);
+      color: #00A86B;
     }
 
-    .thank-body {
-      font-size: 0.95rem;
-      line-height: 1.85;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.7s var(--ease) forwards;
+    .step-pill.current {
+      background: rgba(200, 169, 126, 0.16);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
     }
 
-    .thank-detail {
-      display: inline-block;
-      font-size: 0.82rem;
+    .step-arrow {
       color: var(--sage);
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      padding: 12px 24px;
-      border-radius: 6px;
-      margin-top: 24px;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.85s var(--ease) forwards;
+      opacity: 0.4;
+      font-size: 0.8rem;
     }
 
-    .thank-detail strong {
-      color: var(--cream);
+    /* Main Card */
+    .main-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      padding: 36px 32px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+
+    @media (max-width: 580px) {
+      .main-card { padding: 28px 20px; }
+      body { padding: 24px 14px 60px 14px; }
+    }
+
+    /* Header */
+    .header-section {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .pre-reserve-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(200, 169, 126, 0.12);
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      color: var(--gold);
+      box-shadow: 0 0 24px rgba(200, 169, 126, 0.2);
+    }
+
+    .pre-reserve-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--gold);
+      stroke-width: 2.2;
+    }
+
+    .page-title {
+      font-size: clamp(1.6rem, 4vw, 2.1rem);
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+    }
+
+    .page-subtitle {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .page-subtitle strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    /* Lead Confirmation Box */
+    .lead-summary-card {
+      background: rgba(16, 23, 20, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lead-summary-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lead-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lead-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--green-light);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green-light);
+    }
+
+    .btn-edit-trigger {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 2px 4px;
+    }
+
+    .btn-edit-trigger:hover { color: var(--gold-light); }
+
+    .lead-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 16px;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 480px) {
+      .lead-details-grid { grid-template-columns: 1fr; }
+    }
+
+    .lead-item-label {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .lead-item-val {
+      color: var(--text-primary);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Editable Fields Drawer (Collapsible) */
+    .edit-drawer {
+      display: none;
+      margin-top: 12px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .edit-drawer.open { display: block; }
+
+    .form-group-mini {
+      margin-bottom: 12px;
+    }
+
+    .form-group-mini label {
+      display: block;
+      font-size: 0.74rem;
+      color: var(--sage);
+      margin-bottom: 4px;
+    }
+
+    .input-mini {
+      width: 100%;
+      background: rgba(16, 23, 20, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.88rem;
+    }
+
+    .input-mini:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.15);
+    }
+
+    /* Order Summary Box */
+    .order-summary-box {
+      background: linear-gradient(135deg, rgba(23, 35, 31, 0.98) 0%, rgba(14, 21, 18, 0.98) 100%);
+      border: 1px solid rgba(200, 169, 126, 0.32);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .order-summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(168, 188, 175, 0.12);
+    }
+
+    .summary-title-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.01em;
+    }
+
+    .summary-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(200, 169, 126, 0.15);
+      border: 1px solid rgba(200, 169, 126, 0.35);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .order-summary-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .order-summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .line-val {
+      color: var(--text-primary);
       font-weight: 500;
     }
 
-    .back-link {
+    .line-free {
+      color: var(--green-light);
+      font-weight: 600;
+      font-size: 0.78rem;
+      background: rgba(0, 168, 107, 0.12);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 168, 107, 0.25);
+    }
+
+    .order-summary-divider {
+      height: 1px;
+      background: rgba(168, 188, 175, 0.15);
+      margin: 16px 0;
+    }
+
+    .order-summary-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2px;
+    }
+
+    .total-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    .total-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .total-amount-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .total-currency {
+      font-size: 0.78rem;
+      color: var(--sage);
+      font-weight: 600;
+    }
+
+    .total-amount-val {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: -0.01em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Stripe Card Form */
+    .payment-section {
+      margin-bottom: 24px;
+    }
+
+    .payment-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .payment-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-brands-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-brand-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 4px;
+      background: rgba(168, 188, 175, 0.08);
+      border: 1px solid rgba(168, 188, 175, 0.2);
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+    }
+
+    .stripe-element-container {
+      background: rgba(16, 23, 20, 0.95);
+      border: 1px solid rgba(168, 188, 175, 0.25);
+      border-radius: 10px;
+      padding: 14px 16px;
+      transition: all 0.25s var(--ease);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .stripe-element-container.StripeElement--focus,
+    .stripe-element-container:focus-within {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.18), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .stripe-error-message {
+      color: #ff6b6b;
+      font-size: 0.82rem;
+      margin-top: 8px;
+      display: none;
+      line-height: 1.4;
+      background: rgba(255, 107, 107, 0.08);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 107, 107, 0.2);
+    }
+
+    /* Submit Button */
+    .btn-pay-submit {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #C8A97E 0%, #B8976C 100%);
+      color: #101714;
+      border: none;
+      padding: 18px 28px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-family: inherit;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      box-shadow: 0 8px 24px rgba(200, 169, 126, 0.28);
+      letter-spacing: 0.01em;
+    }
+
+    .btn-pay-submit:hover:not(:disabled) {
+      background: linear-gradient(135deg, #d4b88f 0%, #C8A97E 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(200, 169, 126, 0.4);
+    }
+
+    .btn-pay-submit:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-pay-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      filter: grayscale(20%);
+    }
+
+    .btn-pay-submit .arrow {
+      transition: transform 0.3s var(--ease);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .btn-pay-submit:hover:not(:disabled) .arrow {
+      transform: translateX(4px);
+    }
+
+    /* Trust Badges */
+    .trust-badges-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .trust-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      color: var(--sage);
+    }
+
+    .trust-badge-item svg {
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .trust-dot {
+      color: var(--border);
+      font-size: 0.8rem;
+    }
+
+    /* Alternative Payment Box (WhatsApp / Transfer) */
+    .offline-payment-box {
+      margin-top: 26px;
+      background: rgba(16, 23, 20, 0.6);
+      border: 1px dashed rgba(168, 188, 175, 0.22);
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    .offline-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .offline-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .btn-wa-alt {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-top: 48px;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--sage);
+      background: rgba(0, 168, 107, 0.12);
+      border: 1px solid rgba(0, 168, 107, 0.3);
+      color: #34D399;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 20px;
       text-decoration: none;
-      transition: color 0.3s;
-      opacity: 0;
-      animation: fadeUp 0.8s 1s var(--ease) forwards;
+      transition: all 0.25s var(--ease);
     }
 
-    .back-link:hover { color: var(--text-primary); }
-    .back-link .arrow { transition: transform 0.3s; }
-    .back-link:hover .arrow { transform: translateX(-3px); }
+    .btn-wa-alt:hover {
+      background: rgba(0, 168, 107, 0.22);
+      color: #F5F1E8;
+      border-color: #34D399;
+    }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
+    /* Guarantee Note */
+    .guarantee-note {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 0.76rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* =============================================
+       SUCCESS STATE (POST-PAGO)
+       ============================================= */
+    .success-container {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.6s var(--ease) forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .success-circle {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 2px solid var(--green-light);
+      background: rgba(0, 168, 107, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 32px rgba(0, 168, 107, 0.3);
+    }
+
+    .success-circle svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--green-light);
+      stroke-width: 2.4;
+      fill: none;
+    }
+
+    .success-title {
+      font-size: clamp(1.8rem, 4vw, 2.3rem);
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .success-subtitle {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto 28px;
+    }
+
+    .session-pass-card {
+      background: linear-gradient(135deg, rgba(23, 35, 31, 0.95) 0%, rgba(16, 23, 20, 0.98) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: left;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+    }
+
+    .pass-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pass-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+      background: rgba(200, 169, 126, 0.15);
+      border: 1px solid rgba(200, 169, 126, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .pass-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--green-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pass-status::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--green-light);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green-light);
+    }
+
+    .pass-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 480px) {
+      .pass-grid { grid-template-columns: 1fr; }
+    }
+
+    .pass-label {
+      color: var(--text-muted);
+      font-size: 0.74rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .pass-val {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .btn-wa-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #007A53;
+      color: #ffffff;
+      padding: 16px 28px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0, 122, 83, 0.35);
+      transition: all 0.3s var(--ease);
+      margin-bottom: 24px;
+    }
+
+    .btn-wa-group:hover {
+      background: #008f61;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 122, 83, 0.5);
+    }
+
+    .instructions-box {
+      text-align: left;
+      background: rgba(16, 23, 20, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    .instructions-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    .instructions-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .instructions-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .instructions-list li::before {
+      content: '•';
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .back-home-link {
+      color: var(--sage);
+      font-size: 0.8rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .back-home-link:hover { color: var(--text-primary); }
+
     /* Footer */
     .ty-footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      margin-top: 40px;
       text-align: center;
-      padding: 20px;
-      font-size: 0.68rem;
-      color: rgba(168, 188, 175, 0.3);
+      font-size: 0.72rem;
+      color: rgba(168, 188, 175, 0.35);
     }
 
     .ty-footer a {
-      color: rgba(168, 188, 175, 0.5);
+      color: rgba(168, 188, 175, 0.55);
       text-decoration: underline;
       text-underline-offset: 3px;
-      text-decoration-color: rgba(168, 188, 175, 0.2);
     }
   </style>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-536QFM63');</script>
-  <!-- End Google Tag Manager -->
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-536QFM63"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+
   <div class="ambient"></div>
 
-  <div class="content">
-    <div class="check-circle">
-      <svg viewBox="0 0 24 24">
-        <path d="M5 13l4 4L19 7" />
-      </svg>
+  <main class="checkout-wrapper">
+
+    <!-- FUNNEL STEP TRACKER -->
+    <div class="funnel-steps" id="funnel-steps">
+      <span class="step-pill completed">✓ Paso 1: Datos Registrados</span>
+      <span class="step-arrow">→</span>
+      <span class="step-pill current">Paso 2: Confirmar Entrada</span>
     </div>
 
-    <p class="thank-eyebrow">Registro confirmado</p>
-    <h1 class="thank-title">Gracias por tu interés</h1>
-    <p class="thank-body">
-      Hemos recibido tu solicitud correctamente.<br />
-      Te contactaremos pronto para confirmar los detalles de tu experiencia.
-    </p>
-    <p class="thank-body">
-      Prepárate para un viaje de sonido que transformará tu presencia.
-    </p>
+    <!-- MAIN CHECKOUT CARD (PRE-PAGO) -->
+    <div class="main-card" id="checkout-card">
+      
+      <!-- HEADER -->
+      <div class="header-section">
+        <div class="pre-reserve-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h1 class="page-title">Tu cupo está pre-reservado</h1>
+        <p class="page-subtitle">
+          Hemos recibido tu registro con éxito. Para asegurar tu lugar inmediato en la sala y evitar que sea liberado a la lista de espera, confirma tu entrada a <strong>Precio Fundador ($77 USD)</strong>.
+        </p>
+      </div>
 
-    <a href="/" class="back-link">
-      <span class="arrow">←</span> Volver al inicio
-    </a>
-  </div>
+      <!-- LEAD SUMMARY CARD -->
+      <div class="lead-summary-card">
+        <div class="lead-summary-top">
+          <span class="lead-badge">Cupo Pre-Asignado</span>
+          <button type="button" class="btn-edit-trigger" id="btn-toggle-edit">Modificar datos</button>
+        </div>
+        <div class="lead-details-grid">
+          <div>
+            <span class="lead-item-label">Asistente</span>
+            <div class="lead-item-val" id="disp-name">Cargando datos...</div>
+          </div>
+          <div>
+            <span class="lead-item-label">Sesión Seleccionada</span>
+            <div class="lead-item-val" id="disp-option">Sábado 3 de Octubre</div>
+          </div>
+          <div>
+            <span class="lead-item-label">Correo</span>
+            <div class="lead-item-val" id="disp-email">tu@correo.com</div>
+          </div>
+          <div>
+            <span class="lead-item-label">WhatsApp</span>
+            <div class="lead-item-val" id="disp-phone">+505 ...</div>
+          </div>
+        </div>
 
-  <div class="ty-footer">
-    Made with ❤️ by <a href="https://futurapartner.com/" target="_blank" rel="noopener">Futura Partner</a>
-  </div>
+        <!-- Hidden Drawer to Edit Lead Info -->
+        <div class="edit-drawer" id="edit-drawer">
+          <div class="form-group-mini">
+            <label for="edit-name">Nombre Completo</label>
+            <input type="text" id="edit-name" class="input-mini" placeholder="Tu nombre" />
+          </div>
+          <div class="form-group-mini">
+            <label for="edit-email">Correo Electrónico</label>
+            <input type="email" id="edit-email" class="input-mini" placeholder="tu@correo.com" />
+          </div>
+          <div class="form-group-mini">
+            <label for="edit-phone">Teléfono / WhatsApp</label>
+            <input type="tel" id="edit-phone" class="input-mini" placeholder="+505 ..." />
+          </div>
+        </div>
+      </div>
+
+      <!-- ORDER SUMMARY BOX ($77 USD) -->
+      <div class="order-summary-box">
+        <div class="order-summary-header">
+          <span class="summary-title-text">Resumen de tu Entrada</span>
+          <span class="summary-badge">Precio Fundador</span>
+        </div>
+        <div class="order-summary-items">
+          <div class="order-summary-line">
+            <span>Entrada Sesión Grupal (90 min)</span>
+            <span class="line-val">$77.00 USD</span>
+          </div>
+          <div class="order-summary-line">
+            <span>Aceite Esencial Personalizado</span>
+            <span class="line-free">Incluido ($0)</span>
+          </div>
+          <div class="order-summary-line">
+            <span>Onboarding & Hoja de Ruta Post Sesión</span>
+            <span class="line-free">Incluido ($0)</span>
+          </div>
+        </div>
+        <div class="order-summary-divider"></div>
+        <div class="order-summary-total">
+          <div>
+            <span class="total-label">Total a pagar hoy</span>
+            <span class="total-sub">Confirmación inmediata · Sin saldos pendientes</span>
+          </div>
+          <div class="total-amount-wrap">
+            <span class="total-currency">USD</span>
+            <span class="total-amount-val">$77.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRIPE CARD PAYMENT -->
+      <form id="payment-form" novalidate>
+        <div class="payment-section">
+          <div class="payment-header-row">
+            <span class="payment-label">Datos de Tarjeta</span>
+            <div class="card-brands-icons">
+              <span class="card-brand-badge">VISA</span>
+              <span class="card-brand-badge">MC</span>
+              <span class="card-brand-badge">AMEX</span>
+            </div>
+          </div>
+          <div id="stripe-card-element" class="stripe-element-container">
+            <!-- Stripe Card Element Mounts Here -->
+          </div>
+          <div id="card-errors" class="stripe-error-message" role="alert"></div>
+        </div>
+
+        <button type="submit" class="btn-pay-submit" id="btn-pay">
+          <span id="btn-pay-text">Confirmar Cupo y Pagar $77 USD</span>
+          <span class="arrow" id="btn-pay-arrow">→</span>
+        </button>
+
+        <div class="trust-badges-container">
+          <div class="trust-badge-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Cifrado SSL 256-bit</span>
+          </div>
+          <span class="trust-dot">·</span>
+          <div class="trust-badge-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Powered by Stripe</span>
+          </div>
+          <span class="trust-dot">·</span>
+          <div class="trust-badge-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Confirmación Inmediata</span>
+          </div>
+        </div>
+      </form>
+
+      <!-- OFFLINE / WHATSAPP ALTERNATIVE -->
+      <div class="offline-payment-box">
+        <div class="offline-title">¿Prefieres pagar por transferencia bancaria (BAC / LAFISE) o efectivo?</div>
+        <p class="offline-desc">Escríbenos por WhatsApp para coordinar tu pago y enviarte los datos de cuenta bancaria al instante.</p>
+        <a id="btn-wa-coord" href="https://wa.me/?text=Hola%20Benjam%C3%ADn%2C%20acabo%20de%20registrarme%20para%20la%20Terapia%20de%20Sonido%20y%20deseo%20coordinar%20mi%20pago" target="_blank" rel="noopener" class="btn-wa-alt">
+          Coordinar pago por WhatsApp →
+        </a>
+      </div>
+
+      <p class="guarantee-note">
+        🔒 <strong>Garantía de Asistencia:</strong> Tu cupo queda 100% reservado. Si por un imprevisto de fuerza mayor no puedes asistir, tu entrada es transferible a un amigo o reprogramable a la siguiente fecha disponible.
+      </p>
+
+    </div>
+
+    <!-- POST-PAYMENT SUCCESS STATE (HIDDEN INITIALLY) -->
+    <div class="main-card success-container" id="success-card">
+      <div class="success-circle">
+        <svg viewBox="0 0 24 24">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <span class="step-pill completed" style="margin-bottom:14px;">✓ Entrada 100% Confirmada</span>
+      <h2 class="success-title">¡Bienvenido(a) a la experiencia!</h2>
+      <p class="success-subtitle">
+        Tu pago de <strong>$77.00 USD</strong> ha sido procesado exitosamente. Tu lugar en la sala está asegurado. Hemos enviado tu comprobante y detalles a tu correo electrónico.
+      </p>
+
+      <!-- PASS DETAILS -->
+      <div class="session-pass-card">
+        <div class="pass-header">
+          <span class="pass-tag">Acceso Confirmado</span>
+          <span class="pass-status">Lugar Reservado</span>
+        </div>
+        <div class="pass-grid">
+          <div>
+            <span class="pass-label">Titular</span>
+            <span class="pass-val" id="succ-name">—</span>
+          </div>
+          <div>
+            <span class="pass-label">Sesión</span>
+            <span class="pass-val" id="succ-option">—</span>
+          </div>
+          <div>
+            <span class="pass-label">Horario</span>
+            <span class="pass-val">5:00 PM – 7:00 PM</span>
+          </div>
+          <div>
+            <span class="pass-label">Ubicación</span>
+            <span class="pass-val">📍 Managua, Nicaragua</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHATSAPP GROUP CTA -->
+      <a id="succ-wa-btn" href="https://wa.me/?text=Hola%20Benjam%C3%ADn%2C%20ya%20complet%C3%A9%20mi%20pago%20de%20%2477%20USD%20para%20la%20Terapia%20de%20Sonido" target="_blank" rel="noopener" class="btn-wa-group">
+        <span>Notificar por WhatsApp / Acceder a la Comunidad</span>
+        <span>→</span>
+      </a>
+
+      <!-- INSTRUCTIONS -->
+      <div class="instructions-box">
+        <div class="instructions-title">Recomendaciones para tu sesión:</div>
+        <ul class="instructions-list">
+          <li>Viste ropa cómoda (de preferencia algodón o lino) para facilitar tu relajación profunda.</li>
+          <li>Llega 15 minutos antes para ubicarte con calma en tu espacio personal.</li>
+          <li>Evita comidas pesadas o café al menos 2 horas antes de la sesión.</li>
+          <li>La dirección exacta del espacio privado te llegará a tu WhatsApp y correo.</li>
+        </ul>
+      </div>
+
+      <a href="/" class="back-home-link">
+        ← Volver a la página principal
+      </a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="ty-footer">
+      Made with ❤️ by <a href="https://futurapartner.com/" target="_blank" rel="noopener">Futura Partner</a> · Terapia de Sonido Grupal © 2026
+    </div>
+
+  </main>
 
   <script>
-    // Push Standard 'Lead' event to dataLayer for GTM & Meta Pixel conversion tracking
+    // =============================================
+    // SOUND ENGINE (Web Audio API Tibetan Singing Bowl)
+    // =============================================
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playBowlChord() {
+      try {
+        initAudio();
+        const now = audioCtx.currentTime;
+        const freqs = [396, 528, 639];
+        freqs.forEach((f, idx) => {
+          setTimeout(() => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+            osc.detune.setValueAtTime((Math.random() - 0.5) * 4, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.2);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4.2);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 4.5);
+          }, idx * 280);
+        });
+      } catch (e) {}
+    }
+
+    // Play subtle arrival chime
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(playBowlChord, 600);
+    });
+
+    // =============================================
+    // LEAD DATA EXTRACTION (URL Params + SessionStorage)
+    // =============================================
+    const params = new URLSearchParams(window.location.search);
+
+    let storedLead = {};
+    try {
+      storedLead = JSON.parse(sessionStorage.getItem('benjamin_lead') || sessionStorage.getItem('lead_data') || '{}');
+    } catch(e) {}
+
+    const leadData = {
+      name:   params.get('name')   || params.get('firstName') || storedLead.name   || 'Asistente Invitado',
+      email:  params.get('email')  || storedLead.email || '',
+      phone:  params.get('phone')  || storedLead.phone || '',
+      option: params.get('option') || storedLead.option || 'Sábado 3 de Octubre (5:00 PM)'
+    };
+
+    // DOM Binding
+    const dispName   = document.getElementById('disp-name');
+    const dispEmail  = document.getElementById('disp-email');
+    const dispPhone  = document.getElementById('disp-phone');
+    const dispOption = document.getElementById('disp-option');
+
+    const editName   = document.getElementById('edit-name');
+    const editEmail  = document.getElementById('edit-email');
+    const editPhone  = document.getElementById('edit-phone');
+
+    function updateLeadUI() {
+      dispName.textContent   = leadData.name || 'Por favor completa tus datos';
+      dispEmail.textContent  = leadData.email || 'No especificado';
+      dispPhone.textContent  = leadData.phone || 'No especificado';
+      dispOption.textContent = leadData.option || 'Sábado 3 de Octubre';
+
+      editName.value  = leadData.name !== 'Asistente Invitado' ? leadData.name : '';
+      editEmail.value = leadData.email;
+      editPhone.value = leadData.phone;
+
+      // Update WhatsApp link text
+      const waCoordBtn = document.getElementById('btn-wa-coord');
+      if (waCoordBtn) {
+        const waMsg = encodeURIComponent(`Hola Benjamín, acabo de registrarme para la Terapia de Sonido (${leadData.option}) a nombre de ${leadData.name}. Me gustaría coordinar mi pago por transferencia bancaria.`);
+        waCoordBtn.href = `https://wa.me/?text=${waMsg}`;
+      }
+    }
+
+    updateLeadUI();
+
+    // Toggle edit drawer
+    const btnToggleEdit = document.getElementById('btn-toggle-edit');
+    const editDrawer = document.getElementById('edit-drawer');
+    btnToggleEdit.addEventListener('click', () => {
+      editDrawer.classList.toggle('open');
+      btnToggleEdit.textContent = editDrawer.classList.contains('open') ? 'Listo' : 'Modificar datos';
+    });
+
+    [editName, editEmail, editPhone].forEach(input => {
+      input.addEventListener('input', () => {
+        leadData.name  = editName.value.trim()  || 'Asistente Invitado';
+        leadData.email = editEmail.value.trim();
+        leadData.phone = editPhone.value.trim();
+        updateLeadUI();
+        try {
+          sessionStorage.setItem('benjamin_lead', JSON.stringify(leadData));
+        } catch(e) {}
+      });
+    });
+
+    // Fire GTM Lead Event on load
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       'event': 'Lead',
       'event_name': 'Lead',
-      'page_type': 'thank_you_page'
+      'page_type': 'checkout_thank_you',
+      'user_email': leadData.email,
+      'user_phone': leadData.phone,
+      'user_name': leadData.name
     });
 
-    // Play a soft bowl sound on arrival
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        if (typeof playBowl === 'undefined') {
-          // Inline bowl synth for thank you page
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
-          const freqs = [396, 528, 639];
-          freqs.forEach((f, i) => {
-            setTimeout(() => {
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.type = 'sine';
-              osc.frequency.setValueAtTime(f, ctx.currentTime);
-              gain.gain.setValueAtTime(0, ctx.currentTime);
-              gain.gain.linearRampToValueAtTime(0.06, ctx.currentTime + 0.3);
-              gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.start(ctx.currentTime);
-              osc.stop(ctx.currentTime + 4);
-            }, i * 600);
-          });
+    // Check if URL has ?paid=true
+    if (params.get('paid') === 'true') {
+      showSuccessState();
+    }
+
+    // =============================================
+    // STRIPE ELEMENTS INTEGRATION ($77 USD)
+    // =============================================
+    const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
+    let stripe = null;
+    let elements = null;
+    let cardElement = null;
+
+    function initStripe() {
+      if (typeof Stripe === 'undefined') {
+        console.warn('Stripe.js no está disponible');
+        return;
+      }
+
+      try {
+        stripe = Stripe(STRIPE_PK);
+        elements = stripe.elements({
+          fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap' }]
+        });
+
+        const cardStyle = {
+          base: {
+            color: '#F5F1E8',
+            fontFamily: "'Manrope', -apple-system, sans-serif",
+            fontSize: '15px',
+            lineHeight: '24px',
+            iconColor: '#C8A97E',
+            '::placeholder': { color: '#6F8075' }
+          },
+          invalid: {
+            color: '#ff6b6b',
+            iconColor: '#ff6b6b'
+          }
+        };
+
+        cardElement = elements.create('card', {
+          style: cardStyle,
+          hidePostalCode: false
+        });
+
+        cardElement.mount('#stripe-card-element');
+
+        cardElement.on('change', (event) => {
+          const errDiv = document.getElementById('card-errors');
+          if (event.error) {
+            errDiv.textContent = event.error.message;
+            errDiv.style.display = 'block';
+          } else {
+            errDiv.textContent = '';
+            errDiv.style.display = 'none';
+          }
+        });
+      } catch (err) {
+        console.warn('Stripe init error:', err);
+      }
+    }
+
+    initStripe();
+
+    // =============================================
+    // PAYMENT FORM SUBMISSION
+    // =============================================
+    const payForm = document.getElementById('payment-form');
+    const payBtn = document.getElementById('btn-pay');
+    const payBtnText = document.getElementById('btn-pay-text');
+    const payBtnArrow = document.getElementById('btn-pay-arrow');
+    const cardErrors = document.getElementById('card-errors');
+
+    payForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Ensure we have an email
+      if (!leadData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(leadData.email)) {
+        editDrawer.classList.add('open');
+        btnToggleEdit.textContent = 'Listo';
+        editEmail.focus();
+        cardErrors.textContent = 'Por favor ingresa un correo electrónico válido para enviarte el comprobante.';
+        cardErrors.style.display = 'block';
+        return;
+      }
+
+      // UI Loading state
+      payBtn.disabled = true;
+      payBtnText.textContent = 'Procesando pago seguro...';
+      payBtnArrow.textContent = '⟳';
+      cardErrors.style.display = 'none';
+
+      playBowlChord();
+
+      try {
+        // 1. Request PaymentIntent from secure serverless function
+        const res = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: leadData.name,
+            email: leadData.email,
+            phone: leadData.phone,
+            eventOption: leadData.option,
+            amount: 7700
+          })
+        });
+
+        const intentData = await res.json();
+        if (intentData.error && !intentData.configNeeded) {
+          throw new Error(intentData.error);
         }
-      }, 800);
+
+        // 2. Confirm card payment with Stripe
+        if (intentData.clientSecret && stripe && cardElement) {
+          const result = await stripe.confirmCardPayment(intentData.clientSecret, {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: leadData.name,
+                email: leadData.email,
+                phone: leadData.phone
+              }
+            }
+          });
+
+          if (result.error) {
+            throw new Error(result.error.message);
+          }
+        }
+
+        // 3. Sync to GoHighLevel as paid contact
+        const tags = [
+          'terapia grupal',
+          'Sound Therapy',
+          'pago_completo',
+          'stripe_paid',
+          'abono:$77',
+          'Del Ruido a la Presencia',
+          leadData.option
+        ];
+
+        fetch('/api/submit-contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: leadData.name,
+            email: leadData.email,
+            phone: leadData.phone,
+            locationId: 'pWmoIvATwHwAM1vn0m0x',
+            source: `Stripe Checkout $77 — ${leadData.option}`,
+            tags: tags
+          })
+        }).catch(err => console.warn('GHL sync error:', err));
+
+        // 4. DataLayer Purchase Event
+        window.dataLayer.push({
+          'event': 'Purchase',
+          'event_name': 'Purchase',
+          'value': 77,
+          'currency': 'USD',
+          'transaction_id': (intentData && intentData.clientSecret) ? intentData.clientSecret.split('_secret')[0] : 'order_' + Date.now(),
+          'user_email': leadData.email,
+          'user_phone': leadData.phone,
+          'user_name': leadData.name
+        });
+
+        // 5. Show Success Screen
+        showSuccessState();
+
+      } catch (err) {
+        console.error('Error al procesar pago:', err);
+        cardErrors.textContent = err.message || 'Ocurrió un error al procesar la tarjeta. Por favor verifica los datos o intenta con otra tarjeta.';
+        cardErrors.style.display = 'block';
+        payBtn.disabled = false;
+        payBtnText.textContent = 'Confirmar Cupo y Pagar $77 USD';
+        payBtnArrow.textContent = '→';
+      }
     });
+
+    function showSuccessState() {
+      playBowlChord();
+      document.getElementById('funnel-steps').style.display = 'none';
+      document.getElementById('checkout-card').style.display = 'none';
+      
+      const succCard = document.getElementById('success-card');
+      succCard.style.display = 'block';
+
+      document.getElementById('succ-name').textContent = leadData.name || 'Asistente';
+      document.getElementById('succ-option').textContent = leadData.option || 'Sábado 3 de Octubre';
+
+      const succWaBtn = document.getElementById('succ-wa-btn');
+      const succMsg = encodeURIComponent(`Hola Benjamín, acabo de completar mi pago de $77 USD para la sesión de Terapia de Sonido (${leadData.option}) a nombre de ${leadData.name}.`);
+      succWaBtn.href = `https://wa.me/?text=${succMsg}`;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
