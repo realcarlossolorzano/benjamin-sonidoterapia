@@ -441,7 +441,7 @@ if (checkoutForm) {
       }
     }
 
-    const selectedOption = selectedOptionEl ? selectedOptionEl.value : 'Evento 3 de Octubre';
+    const selectedOption = selectedOptionEl ? selectedOptionEl.value : 'Evento 17 de Octubre';
 
     // Validación básica de campos
     let valid = true;

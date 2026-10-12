@@ -986,7 +986,7 @@
           </div>
           <div>
             <span class="lead-item-label">Sesión Seleccionada</span>
-            <div class="lead-item-val" id="disp-option">Sábado 3 de Octubre</div>
+            <div class="lead-item-val" id="disp-option">Sábado 17 de Octubre</div>
           </div>
           <div>
             <span class="lead-item-label">Correo</span>
@@ -1298,7 +1298,7 @@
       name:    params.get('name')   || params.get('firstName') || storedLead.name   || 'Asistente Invitado',
       email:   params.get('email')  || storedLead.email || '',
       phone:   params.get('phone')  || storedLead.phone || '',
-      option:  params.get('option') || storedLead.option || 'Sábado 3 de Octubre (5:00 PM)',
+      option:  params.get('option') || storedLead.option || 'Sábado 17 de Octubre (5:00 PM)',
       deposit: currentDeposit
     };
 
@@ -1376,7 +1376,7 @@
       dispName.textContent   = leadData.name || 'Por favor completa tus datos';
       dispEmail.textContent  = leadData.email || 'No especificado';
       dispPhone.textContent  = leadData.phone || 'No especificado';
-      dispOption.textContent = leadData.option || 'Sábado 3 de Octubre';
+      dispOption.textContent = leadData.option || 'Sábado 17 de Octubre';
 
       editName.value  = leadData.name !== 'Asistente Invitado' ? leadData.name : '';
       editEmail.value = leadData.email;
@@ -1608,7 +1608,7 @@
       succCard.style.display = 'block';
 
       document.getElementById('succ-name').textContent = leadData.name || 'Asistente';
-      document.getElementById('succ-option').textContent = leadData.option || 'Sábado 3 de Octubre';
+      document.getElementById('succ-option').textContent = leadData.option || 'Sábado 17 de Octubre';
       document.getElementById('succ-paid-amount').textContent = `$${paidAmount}.00 USD`;
 
       const remainingBox = document.getElementById('succ-remaining-box');
