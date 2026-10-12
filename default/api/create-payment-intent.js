@@ -1,6 +1,9 @@
 // ============================================================================
 // Vercel Serverless Function: /api/create-payment-intent
-// Genera un PaymentIntent directamente contra la REST API de Stripe ($77 USD)
+// Genera un PaymentIntent con Stripe soportando montos dinámicos:
+// - $30 USD (3000 centavos) · Abono Inicial (Saldo pendiente: $47 USD)
+// - $50 USD (5000 centavos) · Abono Parcial (Saldo pendiente: $27 USD)
+// - $77 USD (7700 centavos) · Pago Completo Fundador (Saldo: $0 USD)
 // Cero dependencias externas (usa native fetch de Node 18+)
 // ============================================================================
 
@@ -32,21 +35,40 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { name, email, phone, eventOption } = req.body || {};
+    const { name, email, phone, eventOption, amount } = req.body || {};
 
-    // Monto fijo: $77 USD (7700 centavos)
+    // Diccionario de montos permitidos para validar seguridad
+    const ALLOWED_AMOUNTS = {
+      3000: { usd: 30, label: 'Abono Inicial ($30 USD)', remaining: 47, plan: 'abono_inicial' },
+      5000: { usd: 50, label: 'Abono Parcial ($50 USD)', remaining: 27, plan: 'abono_parcial' },
+      7700: { usd: 77, label: 'Pago Completo Fundador ($77 USD)', remaining: 0, plan: 'pago_completo' }
+    };
+
+    let chargeAmount = 7700;
+    const requestedNum = parseInt(amount, 10);
+    if (ALLOWED_AMOUNTS[requestedNum]) {
+      chargeAmount = requestedNum;
+    } else if ([30, 50, 77].includes(requestedNum)) {
+      chargeAmount = requestedNum * 100;
+    }
+
+    const planInfo = ALLOWED_AMOUNTS[chargeAmount] || ALLOWED_AMOUNTS[7700];
+
     const params = new URLSearchParams();
-    params.append('amount', '7700');
+    params.append('amount', chargeAmount.toString());
     params.append('currency', 'usd');
     params.append('automatic_payment_methods[enabled]', 'true');
-    params.append('description', `Terapia de Sonido Grupal - Entrada Fundador ($77 USD) - ${eventOption || 'General'}`);
+    params.append('description', `Terapia de Sonido Grupal - ${planInfo.label} - ${eventOption || 'General'}`);
     if (email) params.append('receipt_email', email);
     
-    // Metadatos para trazabilidad en Stripe Dashboard
+    // Metadatos para trazabilidad en Stripe Dashboard y webhooks
     params.append('metadata[customer_name]', name || '');
     params.append('metadata[customer_email]', email || '');
     params.append('metadata[customer_phone]', phone || '');
     params.append('metadata[event_option]', eventOption || '');
+    params.append('metadata[payment_type]', planInfo.plan);
+    params.append('metadata[amount_paid_usd]', planInfo.usd.toString());
+    params.append('metadata[remaining_balance_usd]', planInfo.remaining.toString());
     params.append('metadata[product_name]', 'Del Ruido a la Presencia - Terapia de sonido grupal');
     params.append('metadata[ghl_location_id]', process.env.GHL_LOCATION_ID || 'pWmoIvATwHwAM1vn0m0x');
 
@@ -70,6 +92,9 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       clientSecret: data.client_secret,
+      chargeAmount: chargeAmount,
+      amountUsd: planInfo.usd,
+      remainingUsd: planInfo.remaining,
       publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || null
     });
 
@@ -77,4 +102,4 @@ module.exports = async function handler(req, res) {
     console.error('Error interno en create-payment-intent:', error);
     return res.status(500).json({ error: error.message });
   }
-}
+};

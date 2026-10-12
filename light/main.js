@@ -516,7 +516,8 @@ if (form) {
       name: name,
       email: email,
       phone: phone,
-      option: selectedOption
+      option: selectedOption,
+      deposit: depositNumeric
     });
 
     await Promise.race([

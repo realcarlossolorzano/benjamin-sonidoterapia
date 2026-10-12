@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Confirmar Cupo — Terapia de Sonido Grupal</title>
-  <meta name="description" content="Tu cupo está pre-reservado. Completa tu entrada a Precio Fundador ($77 USD) para asegurar tu lugar en la sesión." />
+  <meta name="description" content="Tu cupo está pre-reservado. Elige tu modalidad de pago (Abono desde $30 USD o Pago Completo $77 USD) para asegurar tu lugar en la sesión." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -22,7 +22,7 @@
     :root {
       --bg-deep:        #101714;
       --bg-surface:     #17231F;
-      --bg-card:        rgba(23, 35, 31, 0.88);
+      --bg-card:        rgba(23, 35, 31, 0.90);
       --green:          #007A53;
       --green-light:    #00A86B;
       --sage:           #A8BCAF;
@@ -72,7 +72,7 @@
       transform: translateX(-50%);
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(200, 169, 126, 0.07) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(200, 169, 126, 0.08) 0%, transparent 70%);
       animation: ambientPulse 9s ease-in-out infinite alternate;
     }
 
@@ -98,7 +98,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 620px;
+      max-width: 640px;
       margin: 0 auto;
     }
 
@@ -108,7 +108,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .step-pill {
@@ -152,35 +152,28 @@
     }
 
     @media (max-width: 580px) {
-      .main-card { padding: 28px 20px; }
-      body { padding: 24px 14px 60px 14px; }
+      .main-card { padding: 26px 18px; }
+      body { padding: 20px 12px 60px 12px; }
     }
 
     /* Header */
     .header-section {
       text-align: center;
-      margin-bottom: 26px;
+      margin-bottom: 24px;
     }
 
-    .pre-reserve-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: rgba(200, 169, 126, 0.12);
-      border: 1.5px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 18px;
-      color: var(--gold);
-      box-shadow: 0 0 24px rgba(200, 169, 126, 0.2);
-    }
-
-    .pre-reserve-icon svg {
-      width: 26px;
-      height: 26px;
-      stroke: var(--gold);
-      stroke-width: 2.2;
+    .founder-badge-top {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(200, 169, 126, 0.15);
+      border: 1px solid var(--border-gold);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
     }
 
     .page-title {
@@ -189,14 +182,14 @@
       color: var(--text-primary);
       line-height: 1.25;
       letter-spacing: -0.015em;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .page-subtitle {
-      font-size: 0.92rem;
-      line-height: 1.65;
+      font-size: 0.90rem;
+      line-height: 1.6;
       color: var(--text-secondary);
-      max-width: 520px;
+      max-width: 540px;
       margin: 0 auto;
     }
 
@@ -270,7 +263,7 @@
 
     .lead-item-label {
       color: var(--text-muted);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       display: block;
       margin-bottom: 2px;
     }
@@ -321,12 +314,110 @@
       box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.15);
     }
 
+    /* DYNAMIC DEPOSIT SELECTOR */
+    .deposit-selector-section {
+      margin-bottom: 22px;
+    }
+
+    .selector-heading {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .deposit-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 540px) {
+      .deposit-cards-grid { grid-template-columns: 1fr; gap: 8px; }
+    }
+
+    .deposit-option-card {
+      background: rgba(16, 23, 20, 0.85);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 12px;
+      cursor: pointer;
+      transition: all 0.25s var(--ease);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .deposit-option-card:hover {
+      border-color: var(--gold);
+      background: rgba(23, 35, 31, 0.95);
+      transform: translateY(-2px);
+    }
+
+    .deposit-option-card.selected {
+      border-color: var(--gold);
+      background: rgba(200, 169, 126, 0.10);
+      box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.35);
+    }
+
+    .card-top-tag {
+      font-size: 0.60rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .card-price-display {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+
+    .card-price-currency {
+      font-size: 0.70rem;
+      color: var(--sage);
+      font-weight: 500;
+    }
+
+    .card-balance-note {
+      font-size: 0.70rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .card-recommended-badge {
+      position: absolute;
+      top: -9px;
+      right: 10px;
+      background: #007A53;
+      color: #fff;
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
     /* Order Summary Box */
     .order-summary-box {
       background: linear-gradient(135deg, rgba(23, 35, 31, 0.98) 0%, rgba(14, 21, 18, 0.98) 100%);
       border: 1px solid rgba(200, 169, 126, 0.32);
       border-radius: 14px;
-      padding: 22px 24px;
+      padding: 20px 22px;
       margin-bottom: 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     }
@@ -335,16 +426,15 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
       border-bottom: 1px solid rgba(168, 188, 175, 0.12);
     }
 
     .summary-title-text {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--text-primary);
-      letter-spacing: 0.01em;
     }
 
     .summary-badge {
@@ -355,21 +445,21 @@
       color: var(--gold-light);
       background: rgba(200, 169, 126, 0.15);
       border: 1px solid rgba(200, 169, 126, 0.35);
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 20px;
     }
 
     .order-summary-items {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .order-summary-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-secondary);
     }
 
@@ -383,7 +473,7 @@
       font-weight: 600;
       font-size: 0.78rem;
       background: rgba(0, 168, 107, 0.12);
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
       border: 1px solid rgba(0, 168, 107, 0.25);
     }
@@ -391,25 +481,24 @@
     .order-summary-divider {
       height: 1px;
       background: rgba(168, 188, 175, 0.15);
-      margin: 16px 0;
+      margin: 14px 0;
     }
 
     .order-summary-total {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 2px;
     }
 
     .total-label {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--text-primary);
       display: block;
     }
 
     .total-sub {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       display: block;
       margin-top: 2px;
@@ -418,7 +507,7 @@
     .total-amount-wrap {
       display: flex;
       align-items: baseline;
-      gap: 6px;
+      gap: 5px;
     }
 
     .total-currency {
@@ -428,11 +517,29 @@
     }
 
     .total-amount-val {
-      font-size: 1.65rem;
+      font-size: 1.60rem;
       font-weight: 700;
       color: var(--gold-light);
       letter-spacing: -0.01em;
       font-variant-numeric: tabular-nums;
+    }
+
+    .remaining-balance-banner {
+      background: rgba(200, 169, 126, 0.08);
+      border: 1px solid rgba(200, 169, 126, 0.22);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.80rem;
+      color: var(--text-secondary);
+    }
+
+    .remaining-val {
+      color: var(--gold-light);
+      font-weight: 600;
     }
 
     /* Stripe Card Form */
@@ -509,7 +616,7 @@
       background: linear-gradient(135deg, #C8A97E 0%, #B8976C 100%);
       color: #101714;
       border: none;
-      padding: 18px 28px;
+      padding: 18px 24px;
       font-size: 1.05rem;
       font-weight: 700;
       font-family: inherit;
@@ -524,10 +631,6 @@
       background: linear-gradient(135deg, #d4b88f 0%, #C8A97E 100%);
       transform: translateY(-2px);
       box-shadow: 0 12px 32px rgba(200, 169, 126, 0.4);
-    }
-
-    .btn-pay-submit:active:not(:disabled) {
-      transform: translateY(0);
     }
 
     .btn-pay-submit:disabled {
@@ -578,7 +681,7 @@
 
     /* Alternative Payment Box (WhatsApp / Transfer) */
     .offline-payment-box {
-      margin-top: 26px;
+      margin-top: 24px;
       background: rgba(16, 23, 20, 0.6);
       border: 1px dashed rgba(168, 188, 175, 0.22);
       border-radius: 12px;
@@ -853,7 +956,7 @@
 
     <!-- FUNNEL STEP TRACKER -->
     <div class="funnel-steps" id="funnel-steps">
-      <span class="step-pill completed">✓ Paso 1: Datos Registrados</span>
+      <span class="step-pill completed">✓ Paso 1: Solicitud Recibida</span>
       <span class="step-arrow">→</span>
       <span class="step-pill current">Paso 2: Confirmar Entrada</span>
     </div>
@@ -863,14 +966,10 @@
       
       <!-- HEADER -->
       <div class="header-section">
-        <div class="pre-reserve-icon">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-        </div>
+        <span class="founder-badge-top">Último Evento a Precio Fundador</span>
         <h1 class="page-title">Tu cupo está pre-reservado</h1>
         <p class="page-subtitle">
-          Hemos recibido tu registro con éxito. Para asegurar tu lugar inmediato en la sala y evitar que sea liberado a la lista de espera, confirma tu entrada a <strong>Precio Fundador ($77 USD)</strong>.
+          Hemos recibido tu solicitud. Elige tu modalidad de pago para confirmar tu lugar de forma inmediata con tarjeta y evitar que tu cupo sea liberado.
         </p>
       </div>
 
@@ -916,15 +1015,65 @@
         </div>
       </div>
 
-      <!-- ORDER SUMMARY BOX ($77 USD) -->
+      <!-- DYNAMIC DEPOSIT SELECTOR -->
+      <div class="deposit-selector-section">
+        <div class="selector-heading">
+          <span>Selecciona tu modalidad de pago:</span>
+        </div>
+        <div class="deposit-cards-grid">
+          
+          <!-- Opción 77 -->
+          <div class="deposit-option-card selected" id="card-dep-77" data-amount="77" data-remaining="0">
+            <span class="card-recommended-badge">Recomendado</span>
+            <div>
+              <span class="card-top-tag">Pago Completo</span>
+              <div class="card-price-display">
+                $77 <span class="card-price-currency">USD</span>
+              </div>
+            </div>
+            <div class="card-balance-note">
+              Acceso 100% liquidado · Sin saldo pendiente
+            </div>
+          </div>
+
+          <!-- Opción 50 -->
+          <div class="deposit-option-card" id="card-dep-50" data-amount="50" data-remaining="27">
+            <div>
+              <span class="card-top-tag">Abono Parcial</span>
+              <div class="card-price-display">
+                $50 <span class="card-price-currency">USD</span>
+              </div>
+            </div>
+            <div class="card-balance-note">
+              Aparta tu lugar · Saldo de $27 el día del evento
+            </div>
+          </div>
+
+          <!-- Opción 30 -->
+          <div class="deposit-option-card" id="card-dep-30" data-amount="30" data-remaining="47">
+            <div>
+              <span class="card-top-tag">Abono Inicial</span>
+              <div class="card-price-display">
+                $30 <span class="card-price-currency">USD</span>
+              </div>
+            </div>
+            <div class="card-balance-note">
+              Aparta tu lugar · Saldo de $47 el día del evento
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ORDER SUMMARY BOX -->
       <div class="order-summary-box">
         <div class="order-summary-header">
-          <span class="summary-title-text">Resumen de tu Entrada</span>
-          <span class="summary-badge">Precio Fundador</span>
+          <span class="summary-title-text">Desglose de tu Entrada</span>
+          <span class="summary-badge" id="summary-badge-text">Pago Completo</span>
         </div>
         <div class="order-summary-items">
           <div class="order-summary-line">
-            <span>Entrada Sesión Grupal (90 min)</span>
+            <span>Entrada Sesión Grupal (120 min)</span>
             <span class="line-val">$77.00 USD</span>
           </div>
           <div class="order-summary-line">
@@ -936,16 +1085,23 @@
             <span class="line-free">Incluido ($0)</span>
           </div>
         </div>
+        
         <div class="order-summary-divider"></div>
+        
         <div class="order-summary-total">
           <div>
-            <span class="total-label">Total a pagar hoy</span>
-            <span class="total-sub">Confirmación inmediata · Sin saldos pendientes</span>
+            <span class="total-label" id="summary-total-label">Total a pagar hoy con tarjeta</span>
+            <span class="total-sub" id="summary-total-sub">Acceso confirmado al instante</span>
           </div>
           <div class="total-amount-wrap">
             <span class="total-currency">USD</span>
-            <span class="total-amount-val">$77.00</span>
+            <span class="total-amount-val" id="summary-amount-display">$77.00</span>
           </div>
+        </div>
+
+        <div class="remaining-balance-banner" id="remaining-banner" style="display:none;">
+          <span>Saldo restante a pagar el día de la sesión:</span>
+          <span class="remaining-val" id="remaining-val-display">$0.00 USD</span>
         </div>
       </div>
 
@@ -967,7 +1123,7 @@
         </div>
 
         <button type="submit" class="btn-pay-submit" id="btn-pay">
-          <span id="btn-pay-text">Confirmar Cupo y Pagar $77 USD</span>
+          <span id="btn-pay-text">Confirmar y Pagar $77 USD</span>
           <span class="arrow" id="btn-pay-arrow">→</span>
         </button>
 
@@ -1012,16 +1168,16 @@
         </svg>
       </div>
 
-      <span class="step-pill completed" style="margin-bottom:14px;">✓ Entrada 100% Confirmada</span>
+      <span class="step-pill completed" style="margin-bottom:14px;" id="succ-pill-status">✓ Entrada Confirmada</span>
       <h2 class="success-title">¡Bienvenido(a) a la experiencia!</h2>
-      <p class="success-subtitle">
-        Tu pago de <strong>$77.00 USD</strong> ha sido procesado exitosamente. Tu lugar en la sala está asegurado. Hemos enviado tu comprobante y detalles a tu correo electrónico.
+      <p class="success-subtitle" id="succ-subtitle-text">
+        Tu pago ha sido procesado exitosamente por Stripe. Tu lugar en la sala está asegurado. Hemos enviado tu comprobante y detalles a tu correo electrónico.
       </p>
 
       <!-- PASS DETAILS -->
       <div class="session-pass-card">
         <div class="pass-header">
-          <span class="pass-tag">Acceso Confirmado</span>
+          <span class="pass-tag" id="succ-pass-badge">Acceso Confirmado</span>
           <span class="pass-status">Lugar Reservado</span>
         </div>
         <div class="pass-grid">
@@ -1035,24 +1191,28 @@
           </div>
           <div>
             <span class="pass-label">Horario</span>
-            <span class="pass-val">5:00 PM – 7:00 PM</span>
+            <span class="pass-val">5:00 PM – 7:00 PM (120 min)</span>
           </div>
           <div>
-            <span class="pass-label">Ubicación</span>
-            <span class="pass-val">📍 Managua, Nicaragua</span>
+            <span class="pass-label">Monto Abonado</span>
+            <span class="pass-val" id="succ-paid-amount">$77.00 USD</span>
+          </div>
+          <div id="succ-remaining-box" style="grid-column: 1 / -1; display:none; border-top:1px dashed var(--border); padding-top:10px; margin-top:4px;">
+            <span class="pass-label" style="color:var(--gold-light);">Saldo pendiente para el día del evento</span>
+            <span class="pass-val" id="succ-remaining-amount" style="color:var(--gold-light);font-size:1rem;">$0.00 USD</span>
           </div>
         </div>
       </div>
 
       <!-- WHATSAPP GROUP CTA -->
-      <a id="succ-wa-btn" href="https://wa.me/?text=Hola%20Benjam%C3%ADn%2C%20ya%20complet%C3%A9%20mi%20pago%20de%20%2477%20USD%20para%20la%20Terapia%20de%20Sonido" target="_blank" rel="noopener" class="btn-wa-group">
+      <a id="succ-wa-btn" href="https://wa.me/?text=Hola%20Benjam%C3%ADn%2C%20ya%20complet%C3%A9%20mi%20pago%20para%20la%20Terapia%20de%20Sonido" target="_blank" rel="noopener" class="btn-wa-group">
         <span>Notificar por WhatsApp / Acceder a la Comunidad</span>
         <span>→</span>
       </a>
 
       <!-- INSTRUCTIONS -->
       <div class="instructions-box">
-        <div class="instructions-title">Recomendaciones para tu sesión:</div>
+        <div class="instructions-title">Recomendaciones para tu sesión (120 minutos):</div>
         <ul class="instructions-list">
           <li>Viste ropa cómoda (de preferencia algodón o lino) para facilitar tu relajación profunda.</li>
           <li>Llega 15 minutos antes para ubicarte con calma en tu espacio personal.</li>
@@ -1113,13 +1273,12 @@
       } catch (e) {}
     }
 
-    // Play subtle arrival chime
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(playBowlChord, 600);
     });
 
     // =============================================
-    // LEAD DATA EXTRACTION (URL Params + SessionStorage)
+    // LEAD DATA EXTRACTION & DYNAMIC DEPOSIT
     // =============================================
     const params = new URLSearchParams(window.location.search);
 
@@ -1128,11 +1287,19 @@
       storedLead = JSON.parse(sessionStorage.getItem('benjamin_lead') || sessionStorage.getItem('lead_data') || '{}');
     } catch(e) {}
 
+    // Parse deposit amount from URL or stored lead
+    let rawDeposit = params.get('deposit') || storedLead.deposit || '77';
+    let currentDeposit = 77;
+    if (rawDeposit.toString().includes('30')) currentDeposit = 30;
+    else if (rawDeposit.toString().includes('50')) currentDeposit = 50;
+    else currentDeposit = 77;
+
     const leadData = {
-      name:   params.get('name')   || params.get('firstName') || storedLead.name   || 'Asistente Invitado',
-      email:  params.get('email')  || storedLead.email || '',
-      phone:  params.get('phone')  || storedLead.phone || '',
-      option: params.get('option') || storedLead.option || 'Sábado 3 de Octubre (5:00 PM)'
+      name:    params.get('name')   || params.get('firstName') || storedLead.name   || 'Asistente Invitado',
+      email:   params.get('email')  || storedLead.email || '',
+      phone:   params.get('phone')  || storedLead.phone || '',
+      option:  params.get('option') || storedLead.option || 'Sábado 3 de Octubre (5:00 PM)',
+      deposit: currentDeposit
     };
 
     // DOM Binding
@@ -1145,6 +1312,66 @@
     const editEmail  = document.getElementById('edit-email');
     const editPhone  = document.getElementById('edit-phone');
 
+    const summaryBadgeText   = document.getElementById('summary-badge-text');
+    const summaryTotalLabel   = document.getElementById('summary-total-label');
+    const summaryTotalSub     = document.getElementById('summary-total-sub');
+    const summaryAmountDisplay = document.getElementById('summary-amount-display');
+    const remainingBanner     = document.getElementById('remaining-banner');
+    const remainingValDisplay = document.getElementById('remaining-val-display');
+
+    const btnPayText = document.getElementById('btn-pay-text');
+
+    function updateDepositUI(amount) {
+      currentDeposit = amount;
+      leadData.deposit = amount;
+
+      // Update deposit selection cards styling
+      document.querySelectorAll('.deposit-option-card').forEach(c => c.classList.remove('selected'));
+      const activeCard = document.getElementById(`card-dep-${amount}`);
+      if (activeCard) activeCard.classList.add('selected');
+
+      if (amount === 77) {
+        summaryBadgeText.textContent = 'Pago Completo';
+        summaryTotalLabel.textContent = 'Total a pagar hoy con tarjeta';
+        summaryTotalSub.textContent = 'Acceso 100% confirmado · Sin saldos pendientes';
+        summaryAmountDisplay.textContent = '$77.00';
+        remainingBanner.style.display = 'none';
+        btnPayText.textContent = 'Confirmar y Pagar $77 USD (Acceso Total)';
+      } else if (amount === 50) {
+        summaryBadgeText.textContent = 'Abono Parcial';
+        summaryTotalLabel.textContent = 'Abono a pagar hoy con tarjeta';
+        summaryTotalSub.textContent = 'Reserva tu espacio · Saldo de $27 el día del evento';
+        summaryAmountDisplay.textContent = '$50.00';
+        remainingBanner.style.display = 'flex';
+        remainingValDisplay.textContent = '$27.00 USD';
+        btnPayText.textContent = 'Confirmar y Abonar $50 USD';
+      } else if (amount === 30) {
+        summaryBadgeText.textContent = 'Abono Inicial';
+        summaryTotalLabel.textContent = 'Abono a pagar hoy con tarjeta';
+        summaryTotalSub.textContent = 'Reserva tu espacio · Saldo de $47 el día del evento';
+        summaryAmountDisplay.textContent = '$30.00';
+        remainingBanner.style.display = 'flex';
+        remainingValDisplay.textContent = '$47.00 USD';
+        btnPayText.textContent = 'Confirmar y Abonar $30 USD';
+      }
+
+      // Update WhatsApp coordination link
+      const waCoordBtn = document.getElementById('btn-wa-coord');
+      if (waCoordBtn) {
+        const waMsg = encodeURIComponent(`Hola Benjamín, acabo de registrarme para la Terapia de Sonido (${leadData.option}) a nombre de ${leadData.name}. Me gustaría coordinar mi abono de $${currentDeposit} USD por transferencia bancaria.`);
+        waCoordBtn.href = `https://wa.me/?text=${waMsg}`;
+      }
+    }
+
+    // Attach click events to deposit cards
+    document.querySelectorAll('.deposit-option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const amt = parseInt(card.dataset.amount, 10);
+        updateDepositUI(amt);
+        playBowlChord();
+      });
+    });
+
     function updateLeadUI() {
       dispName.textContent   = leadData.name || 'Por favor completa tus datos';
       dispEmail.textContent  = leadData.email || 'No especificado';
@@ -1155,12 +1382,7 @@
       editEmail.value = leadData.email;
       editPhone.value = leadData.phone;
 
-      // Update WhatsApp link text
-      const waCoordBtn = document.getElementById('btn-wa-coord');
-      if (waCoordBtn) {
-        const waMsg = encodeURIComponent(`Hola Benjamín, acabo de registrarme para la Terapia de Sonido (${leadData.option}) a nombre de ${leadData.name}. Me gustaría coordinar mi pago por transferencia bancaria.`);
-        waCoordBtn.href = `https://wa.me/?text=${waMsg}`;
-      }
+      updateDepositUI(currentDeposit);
     }
 
     updateLeadUI();
@@ -1193,16 +1415,16 @@
       'page_type': 'checkout_thank_you',
       'user_email': leadData.email,
       'user_phone': leadData.phone,
-      'user_name': leadData.name
+      'user_name': leadData.name,
+      'deposit_selected': currentDeposit
     });
 
-    // Check if URL has ?paid=true
     if (params.get('paid') === 'true') {
-      showSuccessState();
+      showSuccessState(currentDeposit);
     }
 
     // =============================================
-    // STRIPE ELEMENTS INTEGRATION ($77 USD)
+    // STRIPE ELEMENTS INTEGRATION
     // =============================================
     const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
     let stripe = null;
@@ -1261,18 +1483,16 @@
     initStripe();
 
     // =============================================
-    // PAYMENT FORM SUBMISSION
+    // PAYMENT FORM SUBMISSION (DYNAMIC CHARGE)
     // =============================================
     const payForm = document.getElementById('payment-form');
     const payBtn = document.getElementById('btn-pay');
-    const payBtnText = document.getElementById('btn-pay-text');
     const payBtnArrow = document.getElementById('btn-pay-arrow');
     const cardErrors = document.getElementById('card-errors');
 
     payForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Ensure we have an email
       if (!leadData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(leadData.email)) {
         editDrawer.classList.add('open');
         btnToggleEdit.textContent = 'Listo';
@@ -1282,16 +1502,17 @@
         return;
       }
 
-      // UI Loading state
+      const chargeAmountCents = currentDeposit * 100;
+
       payBtn.disabled = true;
-      payBtnText.textContent = 'Procesando pago seguro...';
+      btnPayText.textContent = `Procesando pago de $${currentDeposit} USD...`;
       payBtnArrow.textContent = '⟳';
       cardErrors.style.display = 'none';
 
       playBowlChord();
 
       try {
-        // 1. Request PaymentIntent from secure serverless function
+        // 1. Request PaymentIntent for exact amount
         const res = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1300,7 +1521,7 @@
             email: leadData.email,
             phone: leadData.phone,
             eventOption: leadData.option,
-            amount: 7700
+            amount: chargeAmountCents
           })
         });
 
@@ -1327,13 +1548,15 @@
           }
         }
 
-        // 3. Sync to GoHighLevel as paid contact
+        // 3. Sync to GoHighLevel as paid contact with specific deposit tags
+        const depositTag = `abono:$${currentDeposit}`;
+        const isFull = currentDeposit === 77;
         const tags = [
           'terapia grupal',
           'Sound Therapy',
-          'pago_completo',
+          isFull ? 'pago_completo' : 'abono_parcial',
+          depositTag,
           'stripe_paid',
-          'abono:$77',
           'Del Ruido a la Presencia',
           leadData.option
         ];
@@ -1346,16 +1569,16 @@
             email: leadData.email,
             phone: leadData.phone,
             locationId: 'pWmoIvATwHwAM1vn0m0x',
-            source: `Stripe Checkout $77 — ${leadData.option}`,
+            source: `Stripe Checkout $${currentDeposit} USD — ${leadData.option}`,
             tags: tags
           })
         }).catch(err => console.warn('GHL sync error:', err));
 
-        // 4. DataLayer Purchase Event
+        // 4. DataLayer Purchase Event with dynamic value
         window.dataLayer.push({
           'event': 'Purchase',
           'event_name': 'Purchase',
-          'value': 77,
+          'value': currentDeposit,
           'currency': 'USD',
           'transaction_id': (intentData && intentData.clientSecret) ? intentData.clientSecret.split('_secret')[0] : 'order_' + Date.now(),
           'user_email': leadData.email,
@@ -1364,19 +1587,19 @@
         });
 
         // 5. Show Success Screen
-        showSuccessState();
+        showSuccessState(currentDeposit);
 
       } catch (err) {
         console.error('Error al procesar pago:', err);
         cardErrors.textContent = err.message || 'Ocurrió un error al procesar la tarjeta. Por favor verifica los datos o intenta con otra tarjeta.';
         cardErrors.style.display = 'block';
         payBtn.disabled = false;
-        payBtnText.textContent = 'Confirmar Cupo y Pagar $77 USD';
+        btnPayText.textContent = `Confirmar y ${currentDeposit === 77 ? 'Pagar $77 USD' : 'Abonar $' + currentDeposit + ' USD'}`;
         payBtnArrow.textContent = '→';
       }
     });
 
-    function showSuccessState() {
+    function showSuccessState(paidAmount) {
       playBowlChord();
       document.getElementById('funnel-steps').style.display = 'none';
       document.getElementById('checkout-card').style.display = 'none';
@@ -1386,9 +1609,26 @@
 
       document.getElementById('succ-name').textContent = leadData.name || 'Asistente';
       document.getElementById('succ-option').textContent = leadData.option || 'Sábado 3 de Octubre';
+      document.getElementById('succ-paid-amount').textContent = `$${paidAmount}.00 USD`;
+
+      const remainingBox = document.getElementById('succ-remaining-box');
+      const succSubtitle = document.getElementById('succ-subtitle-text');
+      const succPassBadge = document.getElementById('succ-pass-badge');
+
+      if (paidAmount === 77) {
+        remainingBox.style.display = 'none';
+        succPassBadge.textContent = 'Acceso 100% Liquidado';
+        succSubtitle.innerHTML = `Tu pago de <strong>$77.00 USD</strong> ha sido procesado exitosamente por Stripe. Tu lugar en la sala está totalmente confirmado y sin saldos pendientes. Hemos enviado tu comprobante y detalles a tu correo electrónico.`;
+      } else {
+        const remaining = 77 - paidAmount;
+        remainingBox.style.display = 'block';
+        document.getElementById('succ-remaining-amount').textContent = `$${remaining}.00 USD`;
+        succPassBadge.textContent = `Abono de $${paidAmount} USD Confirmado`;
+        succSubtitle.innerHTML = `Tu abono de <strong>$${paidAmount}.00 USD</strong> ha sido procesado exitosamente por Stripe. Tu cupo está reservado. Recuerda que tienes un saldo restante de <strong>$${remaining}.00 USD</strong> a liquidar el día del evento. Hemos enviado tu comprobante a tu correo.`;
+      }
 
       const succWaBtn = document.getElementById('succ-wa-btn');
-      const succMsg = encodeURIComponent(`Hola Benjamín, acabo de completar mi pago de $77 USD para la sesión de Terapia de Sonido (${leadData.option}) a nombre de ${leadData.name}.`);
+      const succMsg = encodeURIComponent(`Hola Benjamín, acabo de completar mi pago de $${paidAmount} USD para la sesión de Terapia de Sonido (${leadData.option}) a nombre de ${leadData.name}.`);
       succWaBtn.href = `https://wa.me/?text=${succMsg}`;
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
