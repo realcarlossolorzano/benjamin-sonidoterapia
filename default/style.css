@@ -2173,3 +2173,228 @@ footer {
   font-size: 12px;
   color: #7A8880;
 }
+
+/* =============================================
+   COMPARATIVE PRICING SECTION (24 Oct vs 14 Nov)
+   ============================================= */
+.pricing-comparison-wrapper {
+  max-width: 840px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricing-dates-banner {
+  margin-bottom: 28px;
+}
+
+.banner-dates-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.banner-dates-title {
+  font-size: clamp(1.2rem, 3.2vw, 1.45rem);
+  font-weight: 500;
+  color: #F5F1E8;
+  letter-spacing: -0.01em;
+}
+
+.banner-time-sub {
+  font-size: 0.92rem;
+  color: #7A8880;
+  font-weight: 400;
+}
+
+.banner-location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(23, 35, 31, 0.85);
+  border: 1px solid rgba(168, 188, 175, 0.22);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  color: #C8A97E;
+  margin-bottom: 22px;
+}
+
+.banner-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(168, 188, 175, 0.12);
+  margin: 0 auto;
+}
+
+.pricing-cards-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 28px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 680px) {
+  .pricing-cards-duo {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.card-founder-duo,
+.card-general-duo {
+  background: linear-gradient(135deg, rgba(23, 35, 31, 0.95) 0%, rgba(16, 23, 20, 0.98) 100%);
+  border-radius: 16px;
+  padding: 34px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+.card-founder-duo {
+  border: 1.5px solid #C8A97E;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(200, 169, 126, 0.15);
+}
+
+.card-general-duo {
+  border: 1px solid rgba(168, 188, 175, 0.2);
+}
+
+.duo-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.pill-founder {
+  background: rgba(200, 169, 126, 0.12);
+  border: 1px solid rgba(200, 169, 126, 0.45);
+  color: #FCD299;
+}
+
+.pill-general {
+  background: rgba(0, 168, 107, 0.12);
+  border: 1px solid rgba(0, 168, 107, 0.4);
+  color: #34D399;
+}
+
+.duo-card-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #F5F1E8;
+  margin-bottom: 14px;
+}
+
+.duo-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.duo-strike {
+  font-size: 1.45rem;
+  color: #6F8075;
+  text-decoration: line-through;
+  font-weight: 300;
+  margin-right: 2px;
+}
+
+.duo-price-amount {
+  font-size: clamp(2.8rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #FCD299;
+  line-height: 1;
+}
+
+.duo-currency {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #A8BCAF;
+  margin-left: 2px;
+}
+
+.duo-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #B9C0B8;
+  margin-top: 6px;
+}
+
+.pricing-facilidad-box {
+  background: rgba(16, 23, 20, 0.7);
+  border: 1px solid rgba(0, 122, 83, 0.35);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.facilidad-pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #C8A97E;
+  background: rgba(200, 169, 126, 0.12);
+  border: 1px solid rgba(200, 169, 126, 0.35);
+  padding: 3px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.facilidad-text {
+  font-size: 0.90rem;
+  color: #B9C0B8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.facilidad-text strong {
+  color: #FCD299;
+  font-weight: 600;
+}
+
+.facilidad-text em {
+  font-style: italic;
+  color: #F5F1E8;
+}
+
+.pricing-includes-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(23, 35, 31, 0.9);
+  border: 1px solid rgba(168, 188, 175, 0.22);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.84rem;
+  color: #FCD299;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.includes-dot {
+  color: #C8A97E;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.pricing-cta-wrap {
+  margin-top: 24px;
+}

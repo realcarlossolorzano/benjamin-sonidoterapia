@@ -366,7 +366,7 @@ if (form) {
       }
     }
 
-    const selectedOption = selectedOptionEl ? selectedOptionEl.value : 'Evento 17 de Octubre';
+    const selectedOption = selectedOptionEl ? selectedOptionEl.value : 'Evento 24 de Octubre';
     const selectedDeposit = selectedDepositEl ? selectedDepositEl.value : '$77 USD (Pago Completo)';
     const depositNumeric = selectedDeposit.includes('30') ? 30 : selectedDeposit.includes('50') ? 50 : 77;
 

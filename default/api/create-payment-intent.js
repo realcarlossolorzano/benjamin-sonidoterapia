@@ -41,14 +41,15 @@ module.exports = async function handler(req, res) {
     const ALLOWED_AMOUNTS = {
       3000: { usd: 30, label: 'Abono Inicial ($30 USD)', remaining: 47, plan: 'abono_inicial' },
       5000: { usd: 50, label: 'Abono Parcial ($50 USD)', remaining: 27, plan: 'abono_parcial' },
-      7700: { usd: 77, label: 'Pago Completo Fundador ($77 USD)', remaining: 0, plan: 'pago_completo' }
+      7700: { usd: 77, label: 'Pago Completo Fundador ($77 USD)', remaining: 0, plan: 'pago_completo' },
+      9000: { usd: 90, label: 'Entrada General ($90 USD)', remaining: 0, plan: 'pago_completo' }
     };
 
     let chargeAmount = 7700;
     const requestedNum = parseInt(amount, 10);
     if (ALLOWED_AMOUNTS[requestedNum]) {
       chargeAmount = requestedNum;
-    } else if ([30, 50, 77].includes(requestedNum)) {
+    } else if ([30, 50, 77, 90].includes(requestedNum)) {
       chargeAmount = requestedNum * 100;
     }
 
