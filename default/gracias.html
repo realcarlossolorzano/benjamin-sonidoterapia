@@ -679,6 +679,23 @@
       opacity: 1;
       color: #93C5FD;
     }
+    .btn-toggle-test-mode-pill {
+      background: rgba(96, 165, 250, 0.12);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      color: #93C5FD;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-toggle-test-mode-pill:hover {
+      background: rgba(96, 165, 250, 0.25);
+      border-color: #60A5FA;
+      color: #ffffff;
+    }
 
     /* Submit Button */
     .btn-pay-submit {
@@ -1191,10 +1208,15 @@
         <div class="payment-section">
           <div class="payment-header-row">
             <span class="payment-label">Datos de Tarjeta</span>
-            <div class="card-brands-icons">
-              <span class="card-brand-badge">VISA</span>
-              <span class="card-brand-badge">MC</span>
-              <span class="card-brand-badge">AMEX</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button type="button" class="btn-toggle-test-mode-pill" id="btn-toggle-test-mode-top">
+                🧪 Probar con Tarjeta 4242
+              </button>
+              <div class="card-brands-icons">
+                <span class="card-brand-badge">VISA</span>
+                <span class="card-brand-badge">MC</span>
+                <span class="card-brand-badge">AMEX</span>
+              </div>
             </div>
           </div>
 
@@ -1628,12 +1650,20 @@
     function applyTestModeUI() {
       const banner = document.getElementById('test-mode-banner');
       const toggleBtn = document.getElementById('btn-toggle-test-mode');
+      const toggleBtnTop = document.getElementById('btn-toggle-test-mode-top');
       if (banner) banner.style.display = isTestMode ? 'flex' : 'none';
       if (toggleBtn) {
         toggleBtn.textContent = isTestMode
           ? '✓ Modo de Prueba Activado (Haz clic para volver a Modo Real)'
           : '🧪 ¿Deseas hacer una compra de prueba? Activar Modo Test (Tarjeta 4242)';
         toggleBtn.style.color = isTestMode ? '#93C5FD' : 'var(--sage)';
+      }
+      if (toggleBtnTop) {
+        toggleBtnTop.textContent = isTestMode
+          ? '✓ Modo Test Activo'
+          : '🧪 Probar con Tarjeta 4242';
+        toggleBtnTop.style.background = isTestMode ? 'rgba(59, 130, 246, 0.3)' : 'rgba(96, 165, 250, 0.12)';
+        toggleBtnTop.style.borderColor = isTestMode ? '#60A5FA' : 'rgba(96, 165, 250, 0.35)';
       }
     }
 
@@ -1703,6 +1733,15 @@
     const toggleTestBtn = document.getElementById('btn-toggle-test-mode');
     if (toggleTestBtn) {
       toggleTestBtn.addEventListener('click', () => {
+        isTestMode = !isTestMode;
+        sessionStorage.setItem('benjamin_test_mode', isTestMode ? 'true' : 'false');
+        initStripe();
+      });
+    }
+
+    const toggleTestBtnTop = document.getElementById('btn-toggle-test-mode-top');
+    if (toggleTestBtnTop) {
+      toggleTestBtnTop.addEventListener('click', () => {
         isTestMode = !isTestMode;
         sessionStorage.setItem('benjamin_test_mode', isTestMode ? 'true' : 'false');
         initStripe();
@@ -1782,6 +1821,18 @@
           });
 
           if (result.error) {
+            const errLower = (result.error.message || '').toLowerCase();
+            if (errLower.includes('test card') || errLower.includes('testmode') || result.error.code === 'testmode_charges_only') {
+              isTestMode = true;
+              sessionStorage.setItem('benjamin_test_mode', 'true');
+              initStripe();
+              cardErrors.textContent = '🧪 Has ingresado la tarjeta de prueba 4242. Activamos el Modo Test automáticamente. Vuelve a hacer clic en "Confirmar y Pagar".';
+              cardErrors.style.display = 'block';
+              payBtn.disabled = false;
+              btnPayText.textContent = `Confirmar y Pagar $${currentDeposit} USD`;
+              payBtnArrow.textContent = '→';
+              return;
+            }
             throw new Error(result.error.message);
           }
         }
