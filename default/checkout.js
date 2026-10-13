@@ -289,8 +289,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // =============================================
-// OPTION SELECTORS (Independent groups)
+// OPTION SELECTORS (Dynamic Date & Price Sync)
 // =============================================
+
+function syncCheckoutDate(dateStr) {
+  const isNov14 = Boolean(dateStr && (dateStr.includes('14') || dateStr.toLowerCase().includes('noviembre')));
+  const amount = isNov14 ? 90 : 77;
+  
+  const badgeEl = document.getElementById('checkout-summary-badge');
+  const basePriceEl = document.getElementById('checkout-base-price');
+  const totalValEl = document.getElementById('checkout-total-val');
+  const btnTextEl = document.getElementById('btn-text');
+
+  if (badgeEl) badgeEl.textContent = isNov14 ? 'Entrada General' : 'Precio Fundador';
+  if (basePriceEl) basePriceEl.textContent = `$${amount}.00 USD`;
+  if (totalValEl) totalValEl.textContent = `$${amount}.00`;
+  if (btnTextEl) btnTextEl.textContent = `Confirmar y Pagar $${amount} USD`;
+}
 
 document.querySelectorAll('.option-selector').forEach(group => {
   const cards = group.querySelectorAll('.option-card');
@@ -300,10 +315,24 @@ document.querySelectorAll('.option-selector').forEach(group => {
       cards.forEach(c => c.classList.remove('active'));
       card.classList.add('active');
       const radio = card.querySelector('input[type="radio"]');
-      if (radio) radio.checked = true;
+      if (radio) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     });
   });
 });
+
+document.querySelectorAll('input[name="eventOption"]').forEach(input => {
+  input.addEventListener('change', (e) => {
+    syncCheckoutDate(e.target.value);
+  });
+});
+
+const checkedDateOnCheckout = document.querySelector('input[name="eventOption"]:checked');
+if (checkedDateOnCheckout) {
+  syncCheckoutDate(checkedDateOnCheckout.value);
+}
 
 // =============================================
 // INTL PHONE INPUT (Country Picker)
@@ -441,7 +470,10 @@ if (checkoutForm) {
       }
     }
 
-    const selectedOption = selectedOptionEl ? selectedOptionEl.value : 'Evento 17 de Octubre';
+    const selectedOption = selectedOptionEl ? selectedOptionEl.value : 'Evento 24 de Octubre';
+    const isNov14 = Boolean(selectedOption && (selectedOption.includes('14') || selectedOption.toLowerCase().includes('noviembre')));
+    const chargeAmount = isNov14 ? 90 : 77;
+    const chargeAmountCents = chargeAmount * 100;
 
     // Validación básica de campos
     let valid = true;
@@ -463,7 +495,7 @@ if (checkoutForm) {
 
     // Estado de carga
     checkoutSubmitBtn.disabled = true;
-    checkoutBtnText.textContent = 'Procesando pago seguro...';
+    checkoutBtnText.textContent = `Procesando pago de $${chargeAmount} USD...`;
     checkoutBtnArrow.textContent = '⟳';
 
     // Sonido armónico de cuencos tibetanos
@@ -484,7 +516,7 @@ if (checkoutForm) {
           email,
           phone,
           eventOption: selectedOption,
-          amount: 7700
+          amount: chargeAmountCents
         })
       });
 
@@ -522,7 +554,7 @@ if (checkoutForm) {
         'Landing Page Checkout',
         'pago_completo',
         'stripe_paid',
-        'abono:$77',
+        `abono:$${chargeAmount}`,
         'Del Ruido a la Presencia',
         selectedOption,
         countryTag,
@@ -536,7 +568,7 @@ if (checkoutForm) {
         email:      email,
         phone:      phone,
         locationId: GHL_LOCATION_ID,
-        source:     `Checkout Stripe $77 — ${selectedOption}`,
+        source:     `Checkout Stripe $${chargeAmount} — ${selectedOption}`,
         tags:       tags,
         attributionSource: {
           url: window.location.href,
@@ -550,12 +582,12 @@ if (checkoutForm) {
         }
       };
 
-      // Push a GTM / Meta Pixel (Purchase event con valor $77)
+      // Push a GTM / Meta Pixel (Purchase event con valor dinámico)
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         'event': 'Purchase',
         'event_name': 'Purchase',
-        'value': 77,
+        'value': chargeAmount,
         'currency': 'USD',
         'transaction_id': (intentData && intentData.clientSecret) ? intentData.clientSecret.split('_secret')[0] : 'order_' + Date.now(),
         'user_email': email,
@@ -572,14 +604,34 @@ if (checkoutForm) {
         body: JSON.stringify(ghlPayload)
       }).catch(err => console.warn('GHL sync error:', err));
 
+      // Guardar datos en sessionStorage para precargar gracias.html
+      try {
+        sessionStorage.setItem('benjamin_lead', JSON.stringify({
+          name: name,
+          email: email,
+          phone: phone,
+          option: selectedOption,
+          deposit: chargeAmount
+        }));
+      } catch(e) {}
+
       // Transición suave a la página de agradecimiento
       setTimeout(() => {
         document.body.style.transition = 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         document.body.style.opacity = '0';
       }, 1200);
 
+      const thanksParams = new URLSearchParams({
+        name: name,
+        email: email,
+        phone: phone,
+        option: selectedOption,
+        deposit: chargeAmount,
+        paid: 'true'
+      });
+
       setTimeout(() => {
-        window.location.href = 'gracias?paid=true';
+        window.location.href = `gracias?${thanksParams.toString()}`;
       }, 1800);
 
     } catch (err) {

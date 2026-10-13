@@ -289,8 +289,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // =============================================
-// OPTION SELECTORS (Independent groups)
+// OPTION SELECTORS (Independent groups & Dynamic Sync)
 // =============================================
+
+function syncDepositOptionsWithDate(dateValue) {
+  const isNov14 = Boolean(dateValue && (dateValue.includes('14') || dateValue.toLowerCase().includes('noviembre')));
+  
+  const payDesc30 = document.getElementById('pay-desc-30');
+  const payDesc50 = document.getElementById('pay-desc-50');
+  const payTitleFull = document.getElementById('pay-title-full');
+  const payDescFull = document.getElementById('pay-desc-full');
+  const payRadioFull = document.getElementById('pay-radio-full');
+
+  if (isNov14) {
+    if (payDesc30) payDesc30.textContent = 'Reserva tu espacio · Saldo de $60 el día del evento';
+    if (payDesc50) payDesc50.textContent = 'Reserva tu espacio · Saldo de $40 el día del evento';
+    if (payTitleFull) payTitleFull.textContent = '$90 USD · Pago Completo Entrada General';
+    if (payDescFull) payDescFull.textContent = 'Acceso 100% confirmado · Sin pagos pendientes';
+    if (payRadioFull) {
+      payRadioFull.value = '$90 USD (Pago Completo)';
+    }
+  } else {
+    // 24 de Octubre / Precio Fundador
+    if (payDesc30) payDesc30.textContent = 'Reserva tu espacio · Saldo de $47 el día del evento';
+    if (payDesc50) payDesc50.textContent = 'Reserva tu espacio · Saldo de $27 el día del evento';
+    if (payTitleFull) payTitleFull.textContent = '$77 USD · Pago Completo Fundador';
+    if (payDescFull) payDescFull.textContent = 'Acceso 100% confirmado · Sin pagos pendientes';
+    if (payRadioFull) {
+      payRadioFull.value = '$77 USD (Pago Completo)';
+    }
+  }
+}
 
 document.querySelectorAll('.option-selector').forEach(group => {
   const cards = group.querySelectorAll('.option-card');
@@ -300,10 +329,26 @@ document.querySelectorAll('.option-selector').forEach(group => {
       cards.forEach(c => c.classList.remove('active'));
       card.classList.add('active');
       const radio = card.querySelector('input[type="radio"]');
-      if (radio) radio.checked = true;
+      if (radio) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     });
   });
 });
+
+// Listener de cambio en selector de eventos
+document.querySelectorAll('input[name="eventOption"]').forEach(input => {
+  input.addEventListener('change', (e) => {
+    syncDepositOptionsWithDate(e.target.value);
+  });
+});
+
+// Inicializar sincronización según fecha activa al cargar
+const initialCheckedDate = document.querySelector('input[name="eventOption"]:checked');
+if (initialCheckedDate) {
+  syncDepositOptionsWithDate(initialCheckedDate.value);
+}
 
 // =============================================
 // INTL PHONE INPUT (Country Picker)
@@ -367,8 +412,14 @@ if (form) {
     }
 
     const selectedOption = selectedOptionEl ? selectedOptionEl.value : 'Evento 24 de Octubre';
-    const selectedDeposit = selectedDepositEl ? selectedDepositEl.value : '$77 USD (Pago Completo)';
-    const depositNumeric = selectedDeposit.includes('30') ? 30 : selectedDeposit.includes('50') ? 50 : 77;
+    const isNov14 = Boolean(selectedOption && (selectedOption.includes('14') || selectedOption.toLowerCase().includes('noviembre')));
+    const selectedDeposit = selectedDepositEl ? selectedDepositEl.value : (isNov14 ? '$90 USD (Pago Completo)' : '$77 USD (Pago Completo)');
+    
+    let depositNumeric = 77;
+    if (selectedDeposit.includes('30')) depositNumeric = 30;
+    else if (selectedDeposit.includes('50')) depositNumeric = 50;
+    else if (selectedDeposit.includes('90')) depositNumeric = 90;
+    else depositNumeric = isNov14 ? 90 : 77;
 
     // Validation
     let valid = true;
@@ -441,7 +492,7 @@ if (form) {
     const countryData = iti ? iti.getSelectedCountryData() : null;
     const countryTag = (countryData && countryData.iso2) ? `country:${countryData.iso2.toUpperCase()}` : null;
     const depositTag = `abono:$${depositNumeric}`;
-    const paymentStatusTag = depositNumeric === 77 ? 'pago_completo' : 'abono_parcial';
+    const paymentStatusTag = (depositNumeric === 77 || depositNumeric === 90) ? 'pago_completo' : 'abono_parcial';
 
     const tags = [
       'terapia grupal',
