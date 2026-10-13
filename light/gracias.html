@@ -606,6 +606,80 @@
       border: 1px solid rgba(255, 107, 107, 0.2);
     }
 
+    /* Test Mode Banner */
+    .test-banner {
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px dashed rgba(96, 165, 250, 0.5);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .test-banner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .test-banner-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #93C5FD;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(37, 99, 235, 0.25);
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+    .test-banner-text {
+      font-size: 0.78rem;
+      color: #D1D5DB;
+      line-height: 1.45;
+    }
+    .test-banner-text strong {
+      color: #BFDBFE;
+      font-family: monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+    .btn-copy-card {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(96, 165, 250, 0.4);
+      color: #93C5FD;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      align-self: flex-start;
+      margin-top: 4px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-copy-card:hover {
+      background: rgba(59, 130, 246, 0.35);
+      color: #ffffff;
+    }
+    .test-mode-toggle-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 0.74rem;
+      color: var(--sage);
+      opacity: 0.8;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    .test-mode-toggle-link:hover {
+      opacity: 1;
+      color: #93C5FD;
+    }
+
     /* Submit Button */
     .btn-pay-submit {
       width: 100%;
@@ -1123,6 +1197,20 @@
               <span class="card-brand-badge">AMEX</span>
             </div>
           </div>
+
+          <!-- Banner Informativo de Modo de Prueba -->
+          <div id="test-mode-banner" class="test-banner" style="display:none;">
+            <div class="test-banner-header">
+              <span class="test-banner-badge">🧪 Modo de Prueba Activo</span>
+              <span style="font-size:0.72rem;color:#93C5FD;">Stripe Test Mode</span>
+            </div>
+            <div class="test-banner-text">
+              Tarjeta de prueba: <strong>4242 4242 4242 4242</strong><br />
+              Vencimiento: <strong>12/28</strong> · CVC: <strong>123</strong> (Sin cobro bancario real)
+            </div>
+            <button type="button" class="btn-copy-card" id="btn-copy-test-card">Copiar número 4242</button>
+          </div>
+
           <div id="stripe-card-element" class="stripe-element-container">
             <!-- Stripe Card Element Mounts Here -->
           </div>
@@ -1149,6 +1237,12 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <span>Confirmación Inmediata</span>
           </div>
+        </div>
+
+        <div style="text-align:center;margin-top:12px;">
+          <button type="button" class="test-mode-toggle-link" id="btn-toggle-test-mode">
+            🧪 ¿Deseas hacer una compra de prueba? Activar Modo Test (Tarjeta 4242)
+          </button>
         </div>
       </form>
 
@@ -1523,7 +1617,26 @@
     // =============================================
     // STRIPE ELEMENTS INTEGRATION
     // =============================================
-    const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
+    // =============================================
+    // STRIPE ELEMENTS INTEGRATION & TEST MODE
+    // =============================================
+    const LIVE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
+    const TEST_PK = 'pk_test_51UEkJyGZ320rgNi1QTOW4nhFEmWQZ2n4zXo4KPP5gSnxpJhljTCwOTZQi1JbjbLEKCJjRL6X3fGTqcqJFmV522Oo00T7nr3CmK';
+
+    let isTestMode = Boolean(params.get('test') === 'true' || params.get('mode') === 'test' || sessionStorage.getItem('benjamin_test_mode') === 'true');
+
+    function applyTestModeUI() {
+      const banner = document.getElementById('test-mode-banner');
+      const toggleBtn = document.getElementById('btn-toggle-test-mode');
+      if (banner) banner.style.display = isTestMode ? 'flex' : 'none';
+      if (toggleBtn) {
+        toggleBtn.textContent = isTestMode
+          ? '✓ Modo de Prueba Activado (Haz clic para volver a Modo Real)'
+          : '🧪 ¿Deseas hacer una compra de prueba? Activar Modo Test (Tarjeta 4242)';
+        toggleBtn.style.color = isTestMode ? '#93C5FD' : 'var(--sage)';
+      }
+    }
+
     let stripe = null;
     let elements = null;
     let cardElement = null;
@@ -1534,8 +1647,16 @@
         return;
       }
 
+      applyTestModeUI();
+      const activePK = isTestMode ? TEST_PK : LIVE_PK;
+
       try {
-        stripe = Stripe(STRIPE_PK);
+        if (cardElement) {
+          cardElement.unmount();
+          cardElement = null;
+        }
+
+        stripe = Stripe(activePK);
         elements = stripe.elements({
           fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap' }]
         });
@@ -1546,7 +1667,7 @@
             fontFamily: "'Manrope', -apple-system, sans-serif",
             fontSize: '15px',
             lineHeight: '24px',
-            iconColor: '#C8A97E',
+            iconColor: isTestMode ? '#60A5FA' : '#C8A97E',
             '::placeholder': { color: '#6F8075' }
           },
           invalid: {
@@ -1578,6 +1699,25 @@
     }
 
     initStripe();
+
+    const toggleTestBtn = document.getElementById('btn-toggle-test-mode');
+    if (toggleTestBtn) {
+      toggleTestBtn.addEventListener('click', () => {
+        isTestMode = !isTestMode;
+        sessionStorage.setItem('benjamin_test_mode', isTestMode ? 'true' : 'false');
+        initStripe();
+      });
+    }
+
+    const copyTestCardBtn = document.getElementById('btn-copy-test-card');
+    if (copyTestCardBtn) {
+      copyTestCardBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('4242424242424242').then(() => {
+          copyTestCardBtn.textContent = '¡Copiado: 4242424242424242!';
+          setTimeout(() => { copyTestCardBtn.textContent = 'Copiar número 4242'; }, 2500);
+        }).catch(() => {});
+      });
+    }
 
     // =============================================
     // PAYMENT FORM SUBMISSION (DYNAMIC CHARGE)
@@ -1618,7 +1758,8 @@
             email: leadData.email,
             phone: leadData.phone,
             eventOption: leadData.option,
-            amount: chargeAmountCents
+            amount: chargeAmountCents,
+            isTest: isTestMode
           })
         });
 
@@ -1657,6 +1798,7 @@
           'Del Ruido a la Presencia',
           leadData.option
         ];
+        if (isTestMode) tags.push('test_purchase');
 
         fetch('/api/submit-contact', {
           method: 'POST',
@@ -1666,7 +1808,7 @@
             email: leadData.email,
             phone: leadData.phone,
             locationId: 'pWmoIvATwHwAM1vn0m0x',
-            source: `Stripe Checkout $${currentDeposit} USD — ${leadData.option}`,
+            source: `Stripe Checkout $${currentDeposit} USD — ${leadData.option} ${isTestMode ? '[TEST]' : ''}`,
             tags: tags
           })
         }).catch(err => console.warn('GHL sync error:', err));

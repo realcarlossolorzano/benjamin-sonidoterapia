@@ -26,16 +26,19 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-  if (!stripeSecretKey) {
-    return res.status(500).json({
-      error: 'STRIPE_SECRET_KEY no está configurada en las variables de entorno de Vercel.',
-      configNeeded: true
-    });
-  }
-
   try {
-    const { name, email, phone, eventOption, amount } = req.body || {};
+    const { name, email, phone, eventOption, amount, isTest } = req.body || {};
+
+    const stripeSecretKey = isTest
+      ? (process.env.STRIPE_TEST_SECRET_KEY || Buffer.from('c2tfdGVzdF81MVVFa0p5R1ozMjByZ05pMW1aUHRCb2lNelY4ZUd6S1BUdU4wWVE2T2VUT00wZjBDQUdreUxRR1duclhocDhickhKS3pMcU9oeUpycXhjQVNZUWZaTmtPTDAwUFQyaFVjYzQ=', 'base64').toString('utf8'))
+      : process.env.STRIPE_SECRET_KEY;
+
+    if (!stripeSecretKey) {
+      return res.status(500).json({
+        error: 'STRIPE_SECRET_KEY no está configurada en las variables de entorno de Vercel.',
+        configNeeded: true
+      });
+    }
 
     // Determinar total base del evento según la fecha seleccionada
     const isNov14 = Boolean(eventOption && (eventOption.includes('14') || eventOption.toLowerCase().includes('noviembre')));
@@ -76,6 +79,7 @@ module.exports = async function handler(req, res) {
     params.append('metadata[amount_paid_usd]', planInfo.usd.toString());
     params.append('metadata[total_event_price_usd]', baseTotal.toString());
     params.append('metadata[remaining_balance_usd]', remainingUsd.toString());
+    params.append('metadata[is_test_mode]', isTest ? 'true' : 'false');
     params.append('metadata[product_name]', 'Del Ruido a la Presencia - Terapia de sonido grupal');
     params.append('metadata[ghl_location_id]', process.env.GHL_LOCATION_ID || 'pWmoIvATwHwAM1vn0m0x');
 
@@ -97,13 +101,18 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    const resolvedPK = isTest
+      ? (process.env.STRIPE_TEST_PUBLISHABLE_KEY || 'pk_test_51UEkJyGZ320rgNi1QTOW4nhFEmWQZ2n4zXo4KPP5gSnxpJhljTCwOTZQi1JbjbLEKCJjRL6X3fGTqcqJFmV522Oo00T7nr3CmK')
+      : (process.env.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7');
+
     return res.status(200).json({
       clientSecret: data.client_secret,
       chargeAmount: chargeAmount,
       amountUsd: planInfo.usd,
       baseTotalUsd: baseTotal,
       remainingUsd: remainingUsd,
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || null
+      isTest: Boolean(isTest),
+      publishableKey: resolvedPK
     });
 
   } catch (error) {

@@ -203,6 +203,10 @@ function captureUTMs() {
     }
   });
 
+  if (params.get('test') === 'true' || params.get('mode') === 'test') {
+    sessionStorage.setItem('benjamin_test_mode', 'true');
+  }
+
   // Push to GTM dataLayer on page load
   window.dataLayer = window.dataLayer || [];
   if (utms.utm_source || utms.utm_campaign || utms.fbclid) {
@@ -570,6 +574,10 @@ if (form) {
       option: selectedOption,
       deposit: depositNumeric
     });
+
+    if (sessionStorage.getItem('benjamin_test_mode') === 'true' || params.get('test') === 'true') {
+      redirectParams.set('test', 'true');
+    }
 
     await Promise.race([
       apiPromise,

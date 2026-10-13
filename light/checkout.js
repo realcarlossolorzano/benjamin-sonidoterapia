@@ -366,8 +366,13 @@ if (phoneInputField && typeof window.intlTelInput !== 'undefined') {
 // Endpoint serverless seguro (protege el token de GHL en Vercel)
 const SUBMIT_CONTACT_URL = '/api/submit-contact';
 
-// Stripe Publishable Key de producción (Benjamín Bautista)
-const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
+// Stripe Publishable Key dinámico (Producción o Test)
+const LIVE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
+const TEST_PK = 'pk_test_51UEkJyGZ320rgNi1QTOW4nhFEmWQZ2n4zXo4KPP5gSnxpJhljTCwOTZQi1JbjbLEKCJjRL6X3fGTqcqJFmV522Oo00T7nr3CmK';
+
+const checkoutUrlParams = new URLSearchParams(window.location.search);
+const isTestMode = Boolean(checkoutUrlParams.get('test') === 'true' || checkoutUrlParams.get('mode') === 'test' || sessionStorage.getItem('benjamin_test_mode') === 'true');
+const STRIPE_PK = isTestMode ? TEST_PK : LIVE_PK;
 
 let stripe = null;
 let elements = null;
@@ -516,7 +521,8 @@ if (checkoutForm) {
           email,
           phone,
           eventOption: selectedOption,
-          amount: chargeAmountCents
+          amount: chargeAmountCents,
+          isTest: isTestMode
         })
       });
 
@@ -562,13 +568,14 @@ if (checkoutForm) {
         utms.utm_campaign ? `campaign:${utms.utm_campaign}` : null,
         metaCapi.fbclid ? 'meta-click' : null
       ].filter(Boolean);
+      if (isTestMode) tags.push('test_purchase');
 
       const ghlPayload = {
         firstName:  name,
         email:      email,
         phone:      phone,
         locationId: GHL_LOCATION_ID,
-        source:     `Checkout Stripe $${chargeAmount} — ${selectedOption}`,
+        source:     `Checkout Stripe $${chargeAmount} — ${selectedOption} ${isTestMode ? '[TEST]' : ''}`,
         tags:       tags,
         attributionSource: {
           url: window.location.href,
@@ -629,6 +636,7 @@ if (checkoutForm) {
         deposit: chargeAmount,
         paid: 'true'
       });
+      if (isTestMode) thanksParams.set('test', 'true');
 
       setTimeout(() => {
         window.location.href = `gracias?${thanksParams.toString()}`;
