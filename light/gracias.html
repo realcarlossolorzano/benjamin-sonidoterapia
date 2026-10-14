@@ -606,62 +606,6 @@
       border: 1px solid rgba(255, 107, 107, 0.2);
     }
 
-    /* Test Mode Banner */
-    .test-banner {
-      background: rgba(37, 99, 235, 0.12);
-      border: 1px dashed rgba(96, 165, 250, 0.5);
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .test-banner-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .test-banner-badge {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: #93C5FD;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: rgba(37, 99, 235, 0.25);
-      padding: 3px 8px;
-      border-radius: 12px;
-    }
-    .test-banner-text {
-      font-size: 0.78rem;
-      color: #D1D5DB;
-      line-height: 1.45;
-    }
-    .test-banner-text strong {
-      color: #BFDBFE;
-      font-family: monospace;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-    }
-    .btn-copy-card {
-      background: rgba(59, 130, 246, 0.2);
-      border: 1px solid rgba(96, 165, 250, 0.4);
-      color: #93C5FD;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      align-self: flex-start;
-      margin-top: 4px;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-    .btn-copy-card:hover {
-      background: rgba(59, 130, 246, 0.35);
-      color: #ffffff;
-    }
-
     /* Submit Button */
     .btn-pay-submit {
       width: 100%;
@@ -1180,19 +1124,6 @@
             </div>
           </div>
 
-          <!-- Banner Informativo de Modo de Prueba -->
-          <div id="test-mode-banner" class="test-banner" style="display:none;">
-            <div class="test-banner-header">
-              <span class="test-banner-badge">🧪 Modo de Prueba Activo</span>
-              <span style="font-size:0.72rem;color:#93C5FD;">Stripe Test Mode</span>
-            </div>
-            <div class="test-banner-text">
-              Tarjeta de prueba: <strong>4242 4242 4242 4242</strong><br />
-              Vencimiento: <strong>12/28</strong> · CVC: <strong>123</strong> (Sin cobro bancario real)
-            </div>
-            <button type="button" class="btn-copy-card" id="btn-copy-test-card">Copiar número 4242</button>
-          </div>
-
           <div id="stripe-card-element" class="stripe-element-container">
             <!-- Stripe Card Element Mounts Here -->
           </div>
@@ -1594,17 +1525,9 @@
     // STRIPE ELEMENTS INTEGRATION
     // =============================================
     // =============================================
-    // STRIPE ELEMENTS INTEGRATION & TEST MODE
+    // STRIPE ELEMENTS INTEGRATION (PURE LIVE)
     // =============================================
-    const LIVE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
-    const TEST_PK = 'pk_test_51UEkJyGZ320rgNi1QTOW4nhFEmWQZ2n4zXo4KPP5gSnxpJhljTCwOTZQi1JbjbLEKCJjRL6X3fGTqcqJFmV522Oo00T7nr3CmK';
-
-    let isTestMode = Boolean(params.get('test') === 'true' || params.get('mode') === 'test');
-
-    function applyTestModeUI() {
-      const banner = document.getElementById('test-mode-banner');
-      if (banner) banner.style.display = isTestMode ? 'flex' : 'none';
-    }
+    const STRIPE_PK = window.STRIPE_PUBLISHABLE_KEY || 'pk_live_51UEkJnKHudjj6mMvAPVzBokwSihk7lvk88EEWtgsl6bGYlAwMEpJPng45ONiuTJkaRcgJSYjsoLRZn2ttiPhX3YL00FD0qNmm7';
 
     let stripe = null;
     let elements = null;
@@ -1616,16 +1539,13 @@
         return;
       }
 
-      applyTestModeUI();
-      const activePK = isTestMode ? TEST_PK : LIVE_PK;
-
       try {
         if (cardElement) {
           cardElement.unmount();
           cardElement = null;
         }
 
-        stripe = Stripe(activePK);
+        stripe = Stripe(STRIPE_PK);
         elements = stripe.elements({
           fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap' }]
         });
@@ -1636,7 +1556,7 @@
             fontFamily: "'Manrope', -apple-system, sans-serif",
             fontSize: '15px',
             lineHeight: '24px',
-            iconColor: isTestMode ? '#60A5FA' : '#C8A97E',
+            iconColor: '#C8A97E',
             '::placeholder': { color: '#6F8075' }
           },
           invalid: {
@@ -1668,16 +1588,6 @@
     }
 
     initStripe();
-
-    const copyTestCardBtn = document.getElementById('btn-copy-test-card');
-    if (copyTestCardBtn) {
-      copyTestCardBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText('4242424242424242').then(() => {
-          copyTestCardBtn.textContent = '¡Copiado: 4242424242424242!';
-          setTimeout(() => { copyTestCardBtn.textContent = 'Copiar número 4242'; }, 2500);
-        }).catch(() => {});
-      });
-    }
 
     // =============================================
     // PAYMENT FORM SUBMISSION (DYNAMIC CHARGE)
@@ -1718,8 +1628,7 @@
             email: leadData.email,
             phone: leadData.phone,
             eventOption: leadData.option,
-            amount: chargeAmountCents,
-            isTest: isTestMode
+            amount: chargeAmountCents
           })
         });
 
@@ -1742,18 +1651,6 @@
           });
 
           if (result.error) {
-            const errLower = (result.error.message || '').toLowerCase();
-            if (errLower.includes('test card') || errLower.includes('testmode') || result.error.code === 'testmode_charges_only') {
-              isTestMode = true;
-              sessionStorage.setItem('benjamin_test_mode', 'true');
-              initStripe();
-              cardErrors.textContent = '🧪 Has ingresado la tarjeta de prueba 4242. Activamos el Modo Test automáticamente. Vuelve a hacer clic en "Confirmar y Pagar".';
-              cardErrors.style.display = 'block';
-              payBtn.disabled = false;
-              btnPayText.textContent = `Confirmar y Pagar $${currentDeposit} USD`;
-              payBtnArrow.textContent = '→';
-              return;
-            }
             throw new Error(result.error.message);
           }
         }
@@ -1770,7 +1667,6 @@
           'Del Ruido a la Presencia',
           leadData.option
         ];
-        if (isTestMode) tags.push('test_purchase');
 
         fetch('/api/submit-contact', {
           method: 'POST',
@@ -1780,7 +1676,7 @@
             email: leadData.email,
             phone: leadData.phone,
             locationId: 'pWmoIvATwHwAM1vn0m0x',
-            source: `Stripe Checkout $${currentDeposit} USD — ${leadData.option} ${isTestMode ? '[TEST]' : ''}`,
+            source: `Stripe Checkout $${currentDeposit} USD — ${leadData.option}`,
             tags: tags
           })
         }).catch(err => console.warn('GHL sync error:', err));
